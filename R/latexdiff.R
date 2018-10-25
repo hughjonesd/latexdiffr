@@ -37,15 +37,15 @@ latexdiff <- function (path1, path2, output = "diff", open = interactive(), clea
   if (ld_ret != 0L) stop("latexdiff command returned an error")
 
   if (requireNamespace("tinytex", quietly = TRUE)) {
-    diff_pdf_path <- tinytex::latexmk(diff_tex_path, clean = clean)
+    tinytex::latexmk(diff_tex_path, clean = clean)
   } else {
     tools::texi2pdf(diff_tex_path, clean = clean)
   }
 
   if (clean) file.remove(tex_paths)
 
+  diff_pdf_path <- paste0(output, ".pdf")
   if (open) {
-    diff_pdf_path <- paste0(output, ".pdf")
     auto_open(diff_pdf_path)
   }
   return(invisible(NULL))
