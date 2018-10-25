@@ -4,16 +4,19 @@
 \alias{latexdiff}
 \title{Produce a diff of two Rmd files using latexdiff}
 \usage{
-latexdiff(path1, path2, output = "diff", open = interactive())
+latexdiff(path1, path2, output = "diff", open = interactive(),
+  clean = TRUE)
 }
 \arguments{
 \item{path1}{Path to the first file}
 
 \item{path2}{Path to the second file}
 
-\item{output}{Path to the output, without the ".tex" file extension.}
+\item{output}{Path to the output, without the file extension.}
 
 \item{open}{Logical. Automatically open the resulting PDF?}
+
+\item{clean}{Logical. Clean up intermediate TeX files?}
 }
 \value{
 Invisible NULL.
