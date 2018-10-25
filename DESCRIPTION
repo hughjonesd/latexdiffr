@@ -11,5 +11,6 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Imports: rmarkdown
 Suggests: tinytex
+SystemRequirements: latexdiff
 LazyData: true
 RoxygenNote: 6.1.0
