@@ -1,0 +1,15 @@
+Package: latexdiffr
+Type: Package
+Title: Diff 'rmarkdown' Files Using the 'latexdiff' Utility
+Version: 0.1.0
+Author: David Hugh-Jones <davidhughjones@gmail.com>
+Maintainer: David Hugh-Jones <davidhughjones@gmail.com>
+Description: This is a convenience package which takes two
+    'rmarkdown' files, renders them to TeX, then diffs them using
+    the external 'latexdiff' utility.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Imports: rmarkdown
+Suggests: tinytex
+LazyData: true
+RoxygenNote: 6.1.0
