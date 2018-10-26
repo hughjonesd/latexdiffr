@@ -9,6 +9,8 @@ to create a diff of two Rmarkdown files.
 remotes::install_github("hughjonesd/latexdiffr")
 ```
 
+You will also need `latexdiff` installed on your system, from e.g. CTAN.
+
 ## Example
 
 
