@@ -33,6 +33,11 @@ showing differences between two Rmd, Rnw or TeX files.
 File types are determined by extension,which should be one of \code{.tex}, \code{.Rmd}
 or \code{.rnw}. Rmd files are processed by \code{\link[rmarkdown:render]{rmarkdown::render()}}. Rnw files
 are processed by \code{\link[knitr:knit]{knitr::knit()}}.
+
+\code{latexdiff} is not perfect. Some changes will confuse it. In particular:
+\itemize{
+\item Changing the document title may cause failures.
+}
 }
 \examples{
 \dontrun{
