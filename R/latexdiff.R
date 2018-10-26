@@ -9,7 +9,7 @@
 #' @param output Path to the output, without the file extension.
 #' @param open Logical. Automatically open the resulting PDF?
 #' @param clean Logical. Clean up intermediate TeX files?
-#' @param quiet Suppress printing. Passed to `render` and/or `knit`.
+#' @param quiet Logical. Suppress printing? Passed to `render` and/or `knit`.
 #' @param output_format An rmarkdown output format for Rmd files, probably
 #'   [rmarkdown::latex_document()]. The default uses the options defined in the Rmd files.
 #'   YAML front matter.
@@ -66,9 +66,7 @@ latexdiff <- function (
   }
 
   diff_tex_path <- paste0(output, ".tex")
-  diff_tex_path <- shQuote(diff_tex_path)
-  tex_paths <- shQuote(tex_paths)
-  ld_ret <-system2("latexdiff", tex_paths, stdout = diff_tex_path)
+  ld_ret <- system2("latexdiff", shQuote(tex_paths), stdout = diff_tex_path)
   if (ld_ret != 0L) stop("latexdiff command returned an error")
 
   if (requireNamespace("tinytex", quietly = TRUE)) {
