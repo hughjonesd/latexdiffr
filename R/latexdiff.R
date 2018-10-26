@@ -45,10 +45,25 @@ latexdiff <- function (
   paths <- c(path1, path2)
   tex_paths <- rep(NA_character_, 2)
 
+  basenames <- sub("(.*)\\.[^\\.]+$", "\\1", paths)
+  if (basenames[1] == basenames[2]) {
+    warning("Input paths have similar filenames, ",
+         "resources may get overwritten during compilation")
+  }
+
+  extensions <- tolower(sub(".*\\.([^\\.]+)$", "\\1", paths))
+  if (! all(extensions %in% c("rmd", "rnw", "tex"))) {
+    stop(sprintf("Unrecognized file types: %s, %s. Files must end in '.Rmd', '.Rnw' or '.tex'",
+      basename(paths[1]), basename(paths[2])))
+  }
+
   for (idx in 1:2) {
-    tex_paths[idx] <- if (grepl("\\.tex$", tolower(paths[idx]))) {
+    tex_paths[idx] <- if (extensions[idx] == "tex") {
             paths[idx]
-          } else if (grepl("\\.rmd$", tolower(paths[idx]))) {
+          } else if (extensions[idx] == "rnw") {
+            loadNamespace("knitr")
+            knitr::knit(paths[idx], quiet = quiet)
+          } else if (extensions[idx] == "rmd") {
             loadNamespace("rmarkdown")
             if (missing(output_format)) {
               doc_opts <- rmarkdown::default_output_format(paths[idx])$options
@@ -56,12 +71,6 @@ latexdiff <- function (
               output_format <- do.call(rmarkdown::latex_document, doc_opts)
             }
             rmarkdown::render(paths[idx], output_format = output_format, quiet = quiet)
-          } else if (grepl("\\.rnw$", tolower(paths[idx]))) {
-            loadNamespace("knitr")
-            knitr::knit(paths[idx], quiet = quiet)
-          } else {
-            stop("Unrecognized file extension for '", paths[idx], "'.",
-                  "Must be one of '.Rmd', '.tex' or '.rnw'.")
           }
   }
 
