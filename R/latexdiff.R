@@ -13,6 +13,7 @@
 #' @param output_format An rmarkdown output format for Rmd files, probably
 #'   [rmarkdown::latex_document()]. The default uses the options defined in the Rmd files.
 #'   YAML front matter.
+#' @param ld_opts Character vector of options to pass to `latexdiff`.
 #'
 #' @details
 #' File types are determined by extension,which should be one of `.tex`, `.Rmd`
@@ -35,20 +36,28 @@
 latexdiff <- function (
         path1,
         path2,
-        output = "diff",
-        open = interactive(),
-        clean = TRUE,
-        quiet = TRUE,
-        output_format = NULL
+        output        = "diff",
+        open          = interactive(),
+        clean         = TRUE,
+        quiet         = TRUE,
+        output_format = NULL,
+        ld_opts       = NULL
       ) {
   force(quiet)
   paths <- c(path1, path2)
   tex_paths <- rep(NA_character_, 2)
 
-  basenames <- sub("(.*)\\.[^\\.]+$", "\\1", paths)
-  if (basenames[1] == basenames[2]) {
+  file_roots <- sub("(.*)\\.[^\\.]+$", "\\1", paths)
+  if (file_roots[1] == file_roots[2]) {
     warning("Input paths have similar filenames, ",
          "resources may get overwritten during compilation")
+  }
+
+  dirs <- normalizePath(dirname(c(paths, output)))
+
+  if (length(unique(dirs)) > 1) {
+    warning("Some input/output files are in different directory. Using latexdiff --flatten option.")
+    ld_opts <- c(ld_opts, "--flatten")
   }
 
   extensions <- tolower(sub(".*\\.([^\\.]+)$", "\\1", paths))
@@ -75,21 +84,21 @@ latexdiff <- function (
   }
 
   diff_tex_path <- paste0(output, ".tex")
-  ld_ret <- system2("latexdiff", shQuote(tex_paths), stdout = diff_tex_path)
+  ld_ret <- system2("latexdiff", c(ld_opts, shQuote(tex_paths)), stdout = diff_tex_path)
   if (ld_ret != 0L) stop("latexdiff command returned an error")
 
-  diff_tex_dir <- dirname(diff_tex_path)
-  diff_tex_basename <- basename(diff_tex_path)
-  oldwd <- getwd()
-  setwd(diff_tex_dir)
+  old_wd <- getwd()
+  setwd(dirname(diff_tex_path))
+  diff_tex_file <- basename(diff_tex_path)
   tryCatch({
+
       if (requireNamespace("tinytex", quietly = TRUE)) {
-        tinytex::latexmk(diff_tex_basename, clean = clean)
+        tinytex::latexmk(diff_tex_file, clean = clean)
       } else {
-        tools::texi2pdf(diff_tex_basename, clean = clean)
+        tools::texi2pdf(diff_tex_file, clean = clean)
       }
-    },
-    finally = setwd(oldwd)
+
+    }, finally = setwd(old_wd)
   )
 
   if (clean) {

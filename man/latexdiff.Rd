@@ -5,7 +5,7 @@
 \title{Produce a diff of two files using latexdiff}
 \usage{
 latexdiff(path1, path2, output = "diff", open = interactive(),
-  clean = TRUE, quiet = TRUE, output_format = NULL)
+  clean = TRUE, quiet = TRUE, output_format = NULL, ld_opts = NULL)
 }
 \arguments{
 \item{path1}{Path to the first file.}
@@ -18,11 +18,13 @@ latexdiff(path1, path2, output = "diff", open = interactive(),
 
 \item{clean}{Logical. Clean up intermediate TeX files?}
 
-\item{quiet}{Suppress printing. Passed to \code{render} and/or \code{knit}.}
+\item{quiet}{Logical. Suppress printing? Passed to \code{render} and/or \code{knit}.}
 
 \item{output_format}{An rmarkdown output format for Rmd files, probably
 \code{\link[rmarkdown:latex_document]{rmarkdown::latex_document()}}. The default uses the options defined in the Rmd files.
 YAML front matter.}
+
+\item{ld_opts}{Character vector of options to pass to \code{latexdiff}.}
 }
 \value{
 Invisible NULL.
