@@ -2,6 +2,12 @@
 
 context("Basic tests")
 
+check_and_remove <- function (path) {
+  expect_true(file.exists(path), label = sprintf("file.exists('%s')", path))
+  if (file.exists(path)) file.remove(path)
+}
+
+
 test_that("All 3 file types compile", {
   files1 <- c("foo-prerendered.tex", "foo-rnw.Rnw", "foo-rmd.Rmd")
   files2 <- c("bar-prerendered.tex", "bar-rnw.Rnw", "bar-rmd.Rmd")
@@ -12,18 +18,41 @@ test_that("All 3 file types compile", {
   for (f1 in files1) for (f2 in files2) {
     expect_error(latexdiff(f1, f2, open = FALSE), regexp = NA,
           label = sprintf("File 1: %s, file 2: %s", f1, f2))
-    expect_true(file.exists("diff.pdf"))
-    if (file.exists("diff.pdf")) file.remove("diff.pdf")
+    check_and_remove("diff.pdf")
   }
 })
 
 
 test_that("Can compile when in different directory", {
-  tmpdir <- normalizePath(tempdir())
-  files <- c("foo-prerendered.tex", "bar-prerendered.tex")
+  make_tmp_dir <- function() {
+    tmpdir <- tempfile()
+    dir.create(tmpdir)
+    normalizePath(tmpdir)
+  }
+  files <- c("foo-rmd.Rmd", "bar-rmd.Rmd")
+
+  tmpdir <- make_tmp_dir()
   file.copy(files, tmpdir)
   paths <- file.path(tmpdir, files)
-  expect_error(latexdiff(paths[1], paths[2], open = FALSE), regexp = NA)
+  expect_warning(latexdiff(paths[1], paths[2], open = FALSE), regexp = "--flatten")
+  check_and_remove("diff.pdf")
+
+  tmpdir <- make_tmp_dir()
+  file.copy(files, tmpdir)
+  paths <- file.path(tmpdir, files)
+  out_path <- file.path(tmpdir, "diff")
+  expect_error(latexdiff(paths[1], paths[2], output = out_path, open = FALSE), regexp = NA)
+  check_and_remove(file.path(tmpdir, "diff.pdf"))
+
+  tmpdir <- character(2)
+  paths <- character(2)
+  for (idx in 1:2) {
+    tmpdir[idx] <- make_tmp_dir()
+    file.copy(files[idx], tmpdir[idx])
+    paths[idx] <- file.path(tmpdir[idx], files[idx])
+  }
+  expect_warning(latexdiff(paths[1], paths[2], open = FALSE), regexp = "--flatten")
+  check_and_remove("diff.pdf")
 })
 
 test_that("Wrong file extension gives error", {
