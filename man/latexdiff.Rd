@@ -19,7 +19,7 @@ latexdiff(path1, path2, output = "diff", open = interactive(),
 \item{clean}{Logical. Clean up intermediate TeX files?}
 
 \item{output_format}{An rmarkdown output format for Rmd files, probably
-\code{\link[=latex_document]{latex_document()}}. The default uses the options defined in the Rmd files
+\code{\link[rmarkdown:latex_document]{rmarkdown::latex_document()}}. The default uses the options defined in the Rmd files.
 YAML front matter.}
 }
 \value{

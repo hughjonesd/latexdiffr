@@ -10,7 +10,7 @@
 #' @param open Logical. Automatically open the resulting PDF?
 #' @param clean Logical. Clean up intermediate TeX files?
 #' @param output_format An rmarkdown output format for Rmd files, probably
-#'   [latex_document()]. The default uses the options defined in the Rmd files
+#'   [rmarkdown::latex_document()]. The default uses the options defined in the Rmd files.
 #'   YAML front matter.
 #'
 #' @details
