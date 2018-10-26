@@ -9,6 +9,7 @@
 #' @param output Path to the output, without the file extension.
 #' @param open Logical. Automatically open the resulting PDF?
 #' @param clean Logical. Clean up intermediate TeX files?
+#' @param quiet Suppress printing. Passed to `render` and/or `knit`.
 #' @param output_format An rmarkdown output format for Rmd files, probably
 #'   [rmarkdown::latex_document()]. The default uses the options defined in the Rmd files.
 #'   YAML front matter.
@@ -31,12 +32,21 @@
 #' \dontrun{
 #' latexdiff("file1.Rmd", "file2.Rmd")
 #' }
-latexdiff <- function (path1, path2, output = "diff", open = interactive(), clean = TRUE, output_format = NULL) {
-
+latexdiff <- function (
+        path1,
+        path2,
+        output = "diff",
+        open = interactive(),
+        clean = TRUE,
+        quiet = TRUE,
+        output_format = NULL
+      ) {
+  force(quiet)
   paths <- c(path1, path2)
   tex_paths <- rep(NA_character_, 2)
+
   for (idx in 1:2) {
-    tex_paths[idx] <- if (grepl("\\.tex", tolower(paths[idx]))) {
+    tex_paths[idx] <- if (grepl("\\.tex$", tolower(paths[idx]))) {
             paths[idx]
           } else if (grepl("\\.rmd$", tolower(paths[idx]))) {
             loadNamespace("rmarkdown")
@@ -45,10 +55,10 @@ latexdiff <- function (path1, path2, output = "diff", open = interactive(), clea
               doc_opts$keep_tex <- NULL # needed
               output_format <- do.call(rmarkdown::latex_document, doc_opts)
             }
-            rmarkdown::render(paths[idx], output_format = output_format)
+            rmarkdown::render(paths[idx], output_format = output_format, quiet = quiet)
           } else if (grepl("\\.rnw$", tolower(paths[idx]))) {
             loadNamespace("knitr")
-            knitr::knit(paths[idx])
+            knitr::knit(paths[idx], quiet = quiet)
           } else {
             stop("Unrecognized file extension for '", paths[idx], "'.",
                   "Must be one of '.Rmd', '.tex' or '.rnw'.")
@@ -56,6 +66,8 @@ latexdiff <- function (path1, path2, output = "diff", open = interactive(), clea
   }
 
   diff_tex_path <- paste0(output, ".tex")
+  diff_tex_path <- shQuote(diff_tex_path)
+  tex_paths <- shQuote(tex_paths)
   ld_ret <-system2("latexdiff", tex_paths, stdout = diff_tex_path)
   if (ld_ret != 0L) stop("latexdiff command returned an error")
 
