@@ -2,27 +2,37 @@
 % Please edit documentation in R/latexdiff.R
 \name{latexdiff}
 \alias{latexdiff}
-\title{Produce a diff of two Rmd files using latexdiff}
+\title{Produce a diff of two files using latexdiff}
 \usage{
 latexdiff(path1, path2, output = "diff", open = interactive(),
-  clean = TRUE)
+  clean = TRUE, output_format = NULL)
 }
 \arguments{
-\item{path1}{Path to the first file}
+\item{path1}{Path to the first file.}
 
-\item{path2}{Path to the second file}
+\item{path2}{Path to the second file.}
 
 \item{output}{Path to the output, without the file extension.}
 
 \item{open}{Logical. Automatically open the resulting PDF?}
 
 \item{clean}{Logical. Clean up intermediate TeX files?}
+
+\item{output_format}{An rmarkdown output format for Rmd files, probably
+\code{\link[=latex_document]{latex_document()}}. The default uses the options defined in the Rmd files
+YAML front matter.}
 }
 \value{
 Invisible NULL.
 }
 \description{
-Produce a diff of two Rmd files using latexdiff
+\code{latexdiff()} uses the external utility \code{latexdiff} to create a PDF file
+showing differences between two Rmd, Rnw or TeX files.
+}
+\details{
+File types are determined by extension,which should be one of \code{.tex}, \code{.Rmd}
+or \code{.rnw}. Rmd files are processed by \code{\link[rmarkdown:render]{rmarkdown::render()}}. Rnw files
+are processed by \code{\link[knitr:knit]{knitr::knit()}}.
 }
 \examples{
 \dontrun{

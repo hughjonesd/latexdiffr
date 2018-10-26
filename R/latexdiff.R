@@ -1,11 +1,23 @@
 
-#' Produce a diff of two Rmd files using latexdiff
+#' Produce a diff of two files using latexdiff
 #'
-#' @param path1 Path to the first file
-#' @param path2 Path to the second file
+#' `latexdiff()` uses the external utility `latexdiff` to create a PDF file
+#' showing differences between two Rmd, Rnw or TeX files.
+#'
+#' @param path1 Path to the first file.
+#' @param path2 Path to the second file.
 #' @param output Path to the output, without the file extension.
 #' @param open Logical. Automatically open the resulting PDF?
 #' @param clean Logical. Clean up intermediate TeX files?
+#' @param output_format An rmarkdown output format for Rmd files, probably
+#'   [latex_document()]. The default uses the options defined in the Rmd files
+#'   YAML front matter.
+#'
+#' @details
+#' File types are determined by extension,which should be one of `.tex`, `.Rmd`
+#' or `.rnw`. Rmd files are processed by [rmarkdown::render()]. Rnw files
+#' are processed by [knitr::knit()].
+#'
 #' @return
 #' Invisible NULL.
 #'
@@ -15,8 +27,7 @@
 #' \dontrun{
 #' latexdiff("file1.Rmd", "file2.Rmd")
 #' }
-latexdiff <- function (path1, path2, output = "diff", open = interactive(), clean = TRUE) {
-  out_fmt <- rmarkdown::latex_document()
+latexdiff <- function (path1, path2, output = "diff", open = interactive(), clean = TRUE, output_format = NULL) {
 
   paths <- c(path1, path2)
   tex_paths <- rep(NA_character_, 2)
@@ -25,7 +36,12 @@ latexdiff <- function (path1, path2, output = "diff", open = interactive(), clea
             paths[idx]
           } else if (grepl("\\.Rmd$", paths[idx])) {
             loadNamespace("rmarkdown")
-            rmarkdown::render(paths[idx], output_format = out_fmt)
+            if (missing(output_format)) {
+              doc_opts <- rmarkdown::default_output_format(paths[idx])$options
+              doc_opts$keep_tex <- NULL # needed
+              output_format <- do.call(rmarkdown::latex_document, doc_opts)
+            }
+            rmarkdown::render(paths[idx], output_format = output_format)
           } else if (grepl("\\.Rnw$", paths[idx])) {
             loadNamespace("knitr")
             knitr::knit(paths[idx])
