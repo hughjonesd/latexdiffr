@@ -41,6 +41,10 @@ are processed by \code{\link[knitr:knit]{knitr::knit()}}.
 \code{latexdiff} is not perfect. Some changes will confuse it. In particular:
 \itemize{
 \item Changing the document title may cause failures.
+\item If input and output files are in different directories, the \code{"diff.tex"}
+file may have incorrect paths for e.g. included figures. \code{latexdiff}
+will add the \code{--flatten} option in this case, but things still are
+not guaranteed to work.
 }
 }
 \examples{

@@ -23,7 +23,11 @@
 #' `latexdiff` is not perfect. Some changes will confuse it. In particular:
 #'
 #' * Changing the document title may cause failures.
-#'
+#' * If input and output files are in different directories, the `"diff.tex"`
+#'    file may have incorrect paths for e.g. included figures. `latexdiff`
+#'    will add the `--flatten` option in this case, but things still are
+#'    not guaranteed to work.
+
 #' @return
 #' Invisible NULL.
 #'
@@ -56,7 +60,8 @@ latexdiff <- function (
   dirs <- normalizePath(dirname(c(paths, output)))
 
   if (length(unique(dirs)) > 1) {
-    warning("Some input/output files are in different directory. Using latexdiff --flatten option.")
+    warning("Some input/output files are in different directory. Using latexdiff --flatten option.\n",
+          "Errors may still occur.")
     ld_opts <- c(ld_opts, "--flatten")
   }
 
