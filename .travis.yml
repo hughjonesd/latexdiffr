@@ -5,4 +5,4 @@ sudo: false
 cache: packages
 
 before_install:
-  - tlmgr install latexdiff
+  - sudo apt-get install latexdiff
