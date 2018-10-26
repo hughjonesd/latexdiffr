@@ -1,0 +1,26 @@
+---
+title: "foo"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+This is a simple document.
+
+Here is some R code: `r 1+1`.
+
+Here is some more R code:
+
+```{r}
+1:5
+LETTERS[1:5]
+```
+
+
+Here is a plot:
+
+```{r}
+plot(1:5, 1:5)
+```
