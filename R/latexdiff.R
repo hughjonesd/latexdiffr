@@ -26,7 +26,7 @@ latexdiff <- function (path1, path2, output = "diff", open = interactive(), clea
           } else if (grepl("\\.Rmd$", paths[idx])) {
             rmarkdown::render(paths[idx], output_format = out_fmt)
           } else if (grepl("\\.Rnw$", paths[idx])) {
-            knit(paths[idx])
+            knitr::knit(paths[idx])
           } else {
             stop("Unrecognized file extension for '", paths[idx], "'")
           }
