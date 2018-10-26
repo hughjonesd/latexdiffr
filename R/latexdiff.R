@@ -78,11 +78,19 @@ latexdiff <- function (
   ld_ret <- system2("latexdiff", shQuote(tex_paths), stdout = diff_tex_path)
   if (ld_ret != 0L) stop("latexdiff command returned an error")
 
-  if (requireNamespace("tinytex", quietly = TRUE)) {
-    tinytex::latexmk(diff_tex_path, clean = clean)
-  } else {
-    tools::texi2pdf(diff_tex_path, clean = clean)
-  }
+  diff_tex_dir <- dirname(diff_tex_path)
+  diff_tex_basename <- basename(diff_tex_path)
+  oldwd <- getwd()
+  setwd(diff_tex_dir)
+  tryCatch({
+      if (requireNamespace("tinytex", quietly = TRUE)) {
+        tinytex::latexmk(diff_tex_basename, clean = clean)
+      } else {
+        tools::texi2pdf(diff_tex_basename, clean = clean)
+      }
+    },
+    finally = setwd(oldwd)
+  )
 
   if (clean) {
     file.remove(setdiff(tex_paths, paths))
