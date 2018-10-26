@@ -13,3 +13,7 @@ test_that("All 3 file types compile", {
     if (file.exists("diff.pdf")) file.remove("diff.pdf")
   }
 })
+
+test_that("Wrong file extension gives error", {
+  expect_error(latexdiff("bad.txt", "foo-rmd.Rmd"))
+})
