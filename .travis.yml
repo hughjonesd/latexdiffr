@@ -6,3 +6,6 @@ cache: packages
 
 before_install:
   - sudo apt-get install latexdiff
+
+after_success:
+  - Rscript -e 'covr::codecov()'

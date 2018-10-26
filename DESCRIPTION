@@ -13,7 +13,8 @@ Suggests:
     tinytex,
     rmarkdown,
     knitr,
-    testthat
+    testthat,
+    covr
 SystemRequirements: latexdiff
 LazyData: true
 RoxygenNote: 6.1.0
