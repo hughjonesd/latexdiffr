@@ -24,8 +24,10 @@ latexdiff <- function (path1, path2, output = "diff", open = interactive(), clea
     tex_paths[idx] <- if (grepl("\\.tex", paths[idx])) {
             paths[idx]
           } else if (grepl("\\.Rmd$", paths[idx])) {
+            loadNamespace("rmarkdown")
             rmarkdown::render(paths[idx], output_format = out_fmt)
           } else if (grepl("\\.Rnw$", paths[idx])) {
+            loadNamespace("knitr")
             knitr::knit(paths[idx])
           } else {
             stop("Unrecognized file extension for '", paths[idx], "'")

@@ -9,8 +9,7 @@ Description: This is a convenience package which takes two
     the external 'latexdiff' utility.
 License: MIT + file LICENSE
 Encoding: UTF-8
-Imports: rmarkdown, knitr
-Suggests: tinytex
+Suggests: tinytex, rmarkdown, knitr
 SystemRequirements: latexdiff
 LazyData: true
 RoxygenNote: 6.1.0
