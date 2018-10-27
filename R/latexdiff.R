@@ -9,9 +9,11 @@
 #' @param output Path to the output, without the file extension.
 #' @param open Logical. Automatically open the resulting PDF?
 #' @param clean Logical. Clean up intermediate TeX files?
+#' @param quiet Logical. Suppress printing? Passed to `render` and/or `knit`.
 #' @param output_format An rmarkdown output format for Rmd files, probably
 #'   [rmarkdown::latex_document()]. The default uses the options defined in the Rmd files.
 #'   YAML front matter.
+#' @param ld_opts Character vector of options to pass to `latexdiff`.
 #'
 #' @details
 #' File types are determined by extension,which should be one of `.tex`, `.Rmd`
@@ -21,7 +23,11 @@
 #' `latexdiff` is not perfect. Some changes will confuse it. In particular:
 #'
 #' * Changing the document title may cause failures.
-#'
+#' * If input and output files are in different directories, the `"diff.tex"`
+#'    file may have incorrect paths for e.g. included figures. `latexdiff`
+#'    will add the `--flatten` option in this case, but things still are
+#'    not guaranteed to work.
+
 #' @return
 #' Invisible NULL.
 #'
@@ -31,39 +37,74 @@
 #' \dontrun{
 #' latexdiff("file1.Rmd", "file2.Rmd")
 #' }
-latexdiff <- function (path1, path2, output = "diff", open = interactive(), clean = TRUE, output_format = NULL) {
-
+latexdiff <- function (
+        path1,
+        path2,
+        output        = "diff",
+        open          = interactive(),
+        clean         = TRUE,
+        quiet         = TRUE,
+        output_format = NULL,
+        ld_opts       = NULL
+      ) {
+  force(quiet)
   paths <- c(path1, path2)
   tex_paths <- rep(NA_character_, 2)
+
+  file_roots <- sub("(.*)\\.[^\\.]+$", "\\1", paths)
+  if (file_roots[1] == file_roots[2]) {
+    warning("Input paths have similar filenames, ",
+         "resources may get overwritten during compilation")
+  }
+
+  dirs <- normalizePath(dirname(c(paths, output)))
+
+  if (length(unique(dirs)) > 1) {
+    warning("Some input/output files are in different directory. Using latexdiff --flatten option.\n",
+          "Errors may still occur.")
+    ld_opts <- c(ld_opts, "--flatten")
+  }
+
+  extensions <- tolower(sub(".*\\.([^\\.]+)$", "\\1", paths))
+  if (! all(extensions %in% c("rmd", "rnw", "tex"))) {
+    stop(sprintf("Unrecognized file types: %s, %s. Files must end in '.Rmd', '.Rnw' or '.tex'",
+      basename(paths[1]), basename(paths[2])))
+  }
+
   for (idx in 1:2) {
-    tex_paths[idx] <- if (grepl("\\.tex", tolower(paths[idx]))) {
+    tex_paths[idx] <- if (extensions[idx] == "tex") {
             paths[idx]
-          } else if (grepl("\\.rmd$", tolower(paths[idx]))) {
+          } else if (extensions[idx] == "rnw") {
+            loadNamespace("knitr")
+            knitr::knit(paths[idx], quiet = quiet)
+          } else if (extensions[idx] == "rmd") {
             loadNamespace("rmarkdown")
             if (missing(output_format)) {
               doc_opts <- rmarkdown::default_output_format(paths[idx])$options
               doc_opts$keep_tex <- NULL # needed
               output_format <- do.call(rmarkdown::latex_document, doc_opts)
             }
-            rmarkdown::render(paths[idx], output_format = output_format)
-          } else if (grepl("\\.rnw$", tolower(paths[idx]))) {
-            loadNamespace("knitr")
-            knitr::knit(paths[idx])
-          } else {
-            stop("Unrecognized file extension for '", paths[idx], "'.",
-                  "Must be one of '.Rmd', '.tex' or '.rnw'.")
+            rmarkdown::render(paths[idx], output_format = output_format, quiet = quiet)
           }
   }
 
   diff_tex_path <- paste0(output, ".tex")
-  ld_ret <-system2("latexdiff", tex_paths, stdout = diff_tex_path)
+  ld_ret <- system2("latexdiff", c(ld_opts, shQuote(tex_paths)), stdout = diff_tex_path)
   if (ld_ret != 0L) stop("latexdiff command returned an error")
 
-  if (requireNamespace("tinytex", quietly = TRUE)) {
-    tinytex::latexmk(diff_tex_path, clean = clean)
-  } else {
-    tools::texi2pdf(diff_tex_path, clean = clean)
-  }
+  old_wd <- getwd()
+  setwd(dirname(diff_tex_path))
+  diff_tex_file <- basename(diff_tex_path)
+  tryCatch({
+
+      if (requireNamespace("tinytex", quietly = TRUE)) {
+        tinytex::latexmk(diff_tex_file, clean = clean)
+      } else {
+        tools::texi2pdf(diff_tex_file, clean = clean)
+      }
+
+    }, finally = setwd(old_wd)
+  )
 
   if (clean) {
     file.remove(setdiff(tex_paths, paths))
