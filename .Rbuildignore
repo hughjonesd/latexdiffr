@@ -2,4 +2,5 @@
 ^\.travis\.yml$
 ^LICENSE\.md$
 ^.*\.Rproj$
+^diff-screenshot.png$
 ^\.Rproj\.user$

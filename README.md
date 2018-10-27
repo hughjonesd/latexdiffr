@@ -23,3 +23,8 @@ latexdiff("file1.Rmd", "file2.Rmd")
 
 ```
 
+This produces output like:
+
+![latexdiff screenshot](https://raw.githubusercontent.com/hughjonesd/latexdiffr/master/diff-screenshot.png)
+
+
