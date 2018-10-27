@@ -38,6 +38,13 @@ File types are determined by extension,which should be one of \code{.tex}, \code
 or \code{.rnw}. Rmd files are processed by \code{\link[rmarkdown:render]{rmarkdown::render()}}. Rnw files
 are processed by \code{\link[knitr:knit]{knitr::knit()}}.
 
+You will need the \code{latexdiff} utility installed on your system:\preformatted{# on MacOS:
+brew install latexdiff
+
+# on Linux:
+sudo apt install latexdiff
+}
+
 \code{latexdiff} is not perfect. Some changes will confuse it. In particular:
 \itemize{
 \item Changing the document title may cause failures.

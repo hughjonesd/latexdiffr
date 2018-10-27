@@ -20,6 +20,16 @@
 #' or `.rnw`. Rmd files are processed by [rmarkdown::render()]. Rnw files
 #' are processed by [knitr::knit()].
 #'
+#' You will need the `latexdiff` utility installed on your system:
+#'
+#' ```
+#' # on MacOS:
+#' brew install latexdiff
+#'
+#' # on Linux:
+#' sudo apt install latexdiff
+#' ```
+#'
 #' `latexdiff` is not perfect. Some changes will confuse it. In particular:
 #'
 #' * Changing the document title may cause failures.

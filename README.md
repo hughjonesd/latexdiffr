@@ -4,7 +4,7 @@
 [![Coverage status](https://codecov.io/gh/hughjonesd/latexdiffr/branch/master/graph/badge.svg)](https://codecov.io/github/hughjonesd/latexdiffr?branch=master)
 
 latexdiffr is a small library that uses the `latexdiff` command
-to create a diff of two Rmarkdown files.
+to create a diff of two Rmarkdown, .Rnw or TeX files.
 
 ## Installation
 
@@ -12,7 +12,15 @@ to create a diff of two Rmarkdown files.
 remotes::install_github("hughjonesd/latexdiffr")
 ```
 
-You will also need `latexdiff` installed on your system, from e.g. CTAN.
+You will also need `latexdiff` installed on your system:
+
+``` bash
+# on MacOS:
+brew install latexdiff
+
+# on Linux:
+sudo apt install latexdiff 
+```
 
 ## Example
 
