@@ -129,6 +129,50 @@ latexdiff <- function (
   return(invisible(NULL))
 }
 
+#' Call latexdiff on git revisions
+#'
+#' `git_latexdiff()` checks out a previous version of a file and calls latexdiff
+#'  on it.
+#'
+#' @param path File path to diff
+#' @param revision Revision, specified in a form that `git` understands. See
+#'   `man gitrevisions`
+#' @param clean Clean up intermediate files, including the checked out file?
+#' @param ... Arguments passed to [latexdiff()]
+#'
+#' @return The result of `latexdiff`
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' git_latexdiff("file1.Rmd", "HEAD^")
+#' }
+git_latexdiff <- function (path, revision, clean = TRUE, ...) {
+  dir <- fs::path_dir(path)
+  cur_file <- fs::path_file(path)
+  cur_filebase <- fs::path_ext_remove(cur_file)
+  cur_fileext  <- paste0(".", fs::path_ext(cur_file))
+  tmp_filepath <- fs::file_temp(pattern = cur_filebase, ext = cur_fileext,
+        tmp_dir = dir)
+
+  root <- rprojroot::is_git_root
+  # this is an absolute path
+  git_path <- fs::path_rel(path,
+        rprojroot::find_root_file("", criterion = root))
+  show_arg <- sprintf("'%s:%s'", revision, git_path)
+
+  if (clean) {
+    on.exit({
+      if (fs::file_exists(tmp_filepath)) fs::file_delete(tmp_filepath)
+    })
+  }
+  res <- system2("git", c("show", show_arg), stdout = tmp_filepath)
+  if (res != 0) {
+    warning(sprintf("`git show %s` returned %s", show_arg, res))
+  }
+
+  latexdiff(path, tmp_filepath, clean = clean, ...)
+}
 
 auto_open <-function (path) {
   sysname <- Sys.info()["sysname"]
