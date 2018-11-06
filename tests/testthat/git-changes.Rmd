@@ -10,3 +10,8 @@ knitr::opts_chunk$set(echo = FALSE)
 Turn and face the strange. `r "Changes!"`
 
 Don't wanna be a richer man
+
+```{r}
+print(rep("Ch-", 3))
+print("Changes!")
+```
