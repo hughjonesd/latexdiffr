@@ -8,3 +8,5 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 Turn and face the strange. `r "Changes!"`
+
+Don't wanna be a richer man
