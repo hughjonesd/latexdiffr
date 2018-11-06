@@ -171,7 +171,11 @@ git_latexdiff <- function (path, revision, clean = TRUE, ...) {
     warning(sprintf("`git show %s` returned %s", show_arg, res))
   }
 
-  latexdiff(path, tmp_filepath, clean = clean, ...)
+  if (! fs::file_exists(tmp_filepath)) {
+    stop("Could not check revision out of git.")
+  }
+
+  latexdiff(tmp_filepath, path, clean = clean, ...)
 }
 
 auto_open <-function (path) {
