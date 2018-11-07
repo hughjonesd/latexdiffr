@@ -140,7 +140,13 @@ latexdiff <- function (
 #' @param clean Clean up intermediate files, including the checked out file?
 #' @param ... Arguments passed to [latexdiff()]
 #'
-#' @return The result of `latexdiff`
+#' @return The result of `latexdiff`.
+#'
+#' @details
+#' `git_latexdiff` only checks out the specific file in `path`. If your Rmd file depends on external
+#' resources which have also changed, you will need to checkout the old revision as a whole and
+#' create the tex file manually.
+#'
 #' @export
 #'
 #' @examples
