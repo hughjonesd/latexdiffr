@@ -15,3 +15,7 @@ Don't wanna be a richer man
 print(rep("Ch-", 3))
 print("Changes!")
 ```
+
+![Bowie](David_Bowie_1975.jpg)
+
+
