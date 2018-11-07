@@ -9,7 +9,8 @@
 #' @param output Path to the output, without the file extension.
 #' @param open Logical. Automatically open the resulting PDF?
 #' @param clean Logical. Clean up intermediate TeX files?
-#' @param quiet Logical. Suppress printing? Passed to `render` and/or `knit`.
+#' @param quiet Logical. Suppress printing? Passed to `render` and `knit`, and hides standard error
+#'   of `latexdiff` itself.
 #' @param output_format An rmarkdown output format for Rmd files, probably
 #'   [rmarkdown::latex_document()]. The default uses the options defined in the Rmd files.
 #'   YAML front matter.
@@ -99,7 +100,12 @@ latexdiff <- function (
   }
 
   diff_tex_path <- paste0(output, ".tex")
-  ld_ret <- system2("latexdiff", c(ld_opts, shQuote(tex_paths)), stdout = diff_tex_path)
+  latexdiff_stderr <- if (quiet) FALSE else ""
+  ld_ret <- system2("latexdiff",
+          c(ld_opts, shQuote(tex_paths)),
+          stdout = diff_tex_path,
+          stderr = latexdiff_stderr
+        )
   if (ld_ret != 0L) stop("latexdiff command returned an error")
 
   old_wd <- getwd()
@@ -162,7 +168,6 @@ git_latexdiff <- function (path, revision, clean = TRUE, ...) {
         tmp_dir = dir)
 
   root <- rprojroot::is_git_root
-  # this is an absolute path
   git_path <- fs::path_rel(path,
         rprojroot::find_root_file("", criterion = root))
   show_arg <- sprintf("'%s:%s'", revision, git_path)
