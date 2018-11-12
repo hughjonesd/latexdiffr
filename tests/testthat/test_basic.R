@@ -69,5 +69,5 @@ test_that("git_latexdiff works", {
     rprojroot::find_root_file("", criterion = root)
   }, silent = TRUE)
   skip_if(inherits(in_git, "try-error"), "Not in git")
-  expect_error(git_latexdiff("git-changes.Rmd", "HEAD~1"), regexp = NA)
+  expect_error(git_latexdiff("git-changes.Rmd", "0ae84d"), regexp = NA)
 })
