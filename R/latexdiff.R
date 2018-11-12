@@ -91,8 +91,13 @@ latexdiff <- function (
           } else if (extensions[idx] == "rmd") {
             loadNamespace("rmarkdown")
             if (missing(output_format)) {
-              doc_opts <- rmarkdown::default_output_format(paths[idx])$options
-              doc_opts$keep_tex <- NULL # needed
+              def_out_fmt <- rmarkdown::default_output_format(paths[idx])
+              if (def_out_fmt$name == "pdf_document") {
+                doc_opts <- def_out_fmt$options
+                doc_opts$keep_tex <- NULL # needed
+              } else {
+                doc_opts <- list()
+              }
               output_format <- do.call(rmarkdown::latex_document, doc_opts)
             }
             rmarkdown::render(paths[idx], output_format = output_format, quiet = quiet)
