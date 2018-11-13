@@ -63,6 +63,7 @@ test_that("Wrong file extension gives error", {
 
 test_that("git_latexdiff works", {
   skip_on_cran()
+  skip_on_travis()
 
   root <- rprojroot::is_git_root
   in_git <- try({
