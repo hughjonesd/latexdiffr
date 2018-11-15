@@ -9,7 +9,8 @@
 #' @param output Path to the output, without the file extension.
 #' @param open Logical. Automatically open the resulting PDF?
 #' @param clean Logical. Clean up intermediate TeX files?
-#' @param quiet Logical. Suppress printing? Passed to `render` and/or `knit`.
+#' @param quiet Logical. Suppress printing? Passed to `render` and `knit`, and hides standard error
+#'   of `latexdiff` itself.
 #' @param output_format An rmarkdown output format for Rmd files, probably
 #'   [rmarkdown::latex_document()]. The default uses the options defined in the Rmd files.
 #'   YAML front matter.
@@ -92,8 +93,13 @@ latexdiff <- function (
           } else if (extensions[idx] == "rmd") {
             loadNamespace("rmarkdown")
             if (missing(output_format)) {
-              doc_opts <- rmarkdown::default_output_format(paths[idx])$options
-              doc_opts$keep_tex <- NULL # needed
+              def_out_fmt <- rmarkdown::default_output_format(paths[idx])
+              if (def_out_fmt$name == "pdf_document") {
+                doc_opts <- def_out_fmt$options
+                doc_opts$keep_tex <- NULL # needed
+              } else {
+                doc_opts <- list()
+              }
               output_format <- do.call(rmarkdown::latex_document, doc_opts)
             }
             rmarkdown::render(paths[idx], output_format = output_format, quiet = quiet)
@@ -101,7 +107,12 @@ latexdiff <- function (
   }
 
   diff_tex_path <- paste0(output, ".tex")
-  ld_ret <- system2("latexdiff", c(ld_opts, shQuote(tex_paths)), stdout = diff_tex_path)
+  latexdiff_stderr <- if (quiet) FALSE else ""
+  ld_ret <- system2("latexdiff",
+          c(ld_opts, shQuote(tex_paths)),
+          stdout = diff_tex_path,
+          stderr = latexdiff_stderr
+        )
   if (ld_ret != 0L) stop("latexdiff command returned an error")
 
   old_wd <- getwd()
@@ -148,7 +159,13 @@ latexdiff <- function (
 #' @param clean Clean up intermediate files, including the checked out file?
 #' @param ... Arguments passed to [latexdiff()]
 #'
-#' @return The result of `latexdiff`
+#' @return The result of `latexdiff`.
+#'
+#' @details
+#' `git_latexdiff` only checks out the specific file in `path`. If your Rmd file depends on external
+#' resources which have also changed, you will need to checkout the old revision as a whole and
+#' create the tex file manually.
+#'
 #' @export
 #'
 #' @examples
@@ -164,7 +181,6 @@ git_latexdiff <- function (path, revision, clean = TRUE, ...) {
         tmp_dir = dir)
 
   root <- rprojroot::is_git_root
-  # this is an absolute path
   git_path <- fs::path_rel(path,
         rprojroot::find_root_file("", criterion = root))
   show_arg <- sprintf("'%s:%s'", revision, git_path)

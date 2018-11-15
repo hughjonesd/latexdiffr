@@ -55,6 +55,20 @@ test_that("Can compile when in different directory", {
   check_and_remove(file.path(tmpdir[1], "diff.pdf"))
 })
 
+
 test_that("Wrong file extension gives error", {
   expect_error(latexdiff("bad.txt", "foo-rmd.Rmd"))
+})
+
+
+test_that("git_latexdiff works", {
+  skip_on_cran()
+  skip_on_travis()
+
+  root <- rprojroot::is_git_root
+  in_git <- try({
+    rprojroot::find_root_file("", criterion = root)
+  }, silent = TRUE)
+  skip_if(inherits(in_git, "try-error"), "Not in git")
+  expect_error(git_latexdiff("git-changes.Rmd", "0ae84d"), regexp = NA)
 })

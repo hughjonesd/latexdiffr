@@ -17,11 +17,16 @@ git_latexdiff(path, revision, clean = TRUE, ...)
 \item{...}{Arguments passed to \code{\link[=latexdiff]{latexdiff()}}}
 }
 \value{
-The result of \code{latexdiff}
+The result of \code{latexdiff}.
 }
 \description{
 \code{git_latexdiff()} checks out a previous version of a file and calls latexdiff
 on it.
+}
+\details{
+\code{git_latexdiff} only checks out the specific file in \code{path}. If your Rmd file depends on external
+resources which have also changed, you will need to checkout the old revision as a whole and
+create the tex file manually.
 }
 \examples{
 \dontrun{

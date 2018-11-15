@@ -35,4 +35,9 @@ This produces output like:
 
 ![latexdiff screenshot](https://raw.githubusercontent.com/hughjonesd/latexdiffr/master/diff-screenshot.png)
 
+`git_latexdiff()` allows you to compare different revisions of a file in git:
 
+```r
+# 3 revisions ago:
+git_latexdiff("my-file.Rmd", "HEAD~3") 
+```
