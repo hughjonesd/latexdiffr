@@ -34,7 +34,7 @@ test_that("Can compile when in different directory", {
   tmpdir <- make_tmp_dir()
   file.copy(files, tmpdir)
   paths <- file.path(tmpdir, files)
-  expect_warning(latexdiff(paths[1], paths[2], open = FALSE), regexp = "--flatten")
+  expect_warning(latexdiff(paths[1], paths[2], output = "diff", open = FALSE), regexp = "--flatten")
   check_and_remove("diff.pdf")
 
   tmpdir <- make_tmp_dir()
@@ -51,8 +51,8 @@ test_that("Can compile when in different directory", {
     file.copy(files[idx], tmpdir[idx])
     paths[idx] <- file.path(tmpdir[idx], files[idx])
   }
-  expect_warning(latexdiff(paths[1], paths[2], open = FALSE), regexp = "--flatten")
-  check_and_remove("diff.pdf")
+  latexdiff(paths[1], paths[2], open = FALSE)
+  check_and_remove(file.path(tmpdir[1], "diff.pdf"))
 })
 
 test_that("Wrong file extension gives error", {

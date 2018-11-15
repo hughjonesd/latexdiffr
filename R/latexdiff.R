@@ -50,7 +50,7 @@
 latexdiff <- function (
         path1,
         path2,
-        output        = "diff",
+        output        = fs::path(fs::path_dir(path1), "diff"),
         open          = interactive(),
         clean         = TRUE,
         quiet         = TRUE,
@@ -61,13 +61,13 @@ latexdiff <- function (
   paths <- c(path1, path2)
   tex_paths <- rep(NA_character_, 2)
 
-  file_roots <- sub("(.*)\\.[^\\.]+$", "\\1", paths)
+  file_roots <- fs::path_ext_remove(paths)
   if (file_roots[1] == file_roots[2]) {
     warning("Input paths have similar filenames, ",
          "resources may get overwritten during compilation")
   }
 
-  dirs <- normalizePath(dirname(c(paths, output)))
+  dirs <- fs::path_real(fs::path_dir(c(paths, output)))
 
   if (length(unique(dirs)) > 1) {
     warning("Some input/output files are in different directory. Using latexdiff --flatten option.\n",
@@ -75,10 +75,12 @@ latexdiff <- function (
     ld_opts <- c(ld_opts, "--flatten")
   }
 
-  extensions <- tolower(sub(".*\\.([^\\.]+)$", "\\1", paths))
+  extensions <- tolower(fs::path_ext(paths))
   if (! all(extensions %in% c("rmd", "rnw", "tex"))) {
-    stop(sprintf("Unrecognized file types: %s, %s. Files must end in '.Rmd', '.Rnw' or '.tex'",
-      basename(paths[1]), basename(paths[2])))
+    stop(sprintf("Unrecognized file types: %s, %s.",
+            fs::path_file(path1),
+            fs::path_file(path2)),
+          "Files must end in '.Rmd', '.Rnw' or '.tex'")
   }
 
   for (idx in 1:2) {
@@ -103,17 +105,22 @@ latexdiff <- function (
   if (ld_ret != 0L) stop("latexdiff command returned an error")
 
   old_wd <- getwd()
-  setwd(dirname(diff_tex_path))
-  diff_tex_file <- basename(diff_tex_path)
+  setwd(fs::path_dir(diff_tex_path))
+  diff_tex_file <- fs::path_file(diff_tex_path)
   tryCatch({
 
       if (requireNamespace("tinytex", quietly = TRUE)) {
-        tinytex::latexmk(diff_tex_file, clean = clean)
+        tinytex::latexmk(diff_tex_file,
+              engine_args = c("-interaction", "nonstopmode"), clean = clean)
       } else {
         tools::texi2pdf(diff_tex_file, clean = clean)
       }
-
-    }, finally = setwd(old_wd)
+    },
+    error = function (e) {
+      warning("PDF creation gave an error:\n\t", e$message,
+            "\nSometimes PDF creation still worked, so let's continue.")
+    },
+    finally = setwd(old_wd)
   )
 
   if (clean) {
@@ -122,6 +129,7 @@ latexdiff <- function (
   }
 
   diff_pdf_path <- paste0(output, ".pdf")
+  if (! fs::file_exists(diff_pdf_path)) stop("Failed to create PDF.")
   if (open) {
     auto_open(diff_pdf_path)
   }
