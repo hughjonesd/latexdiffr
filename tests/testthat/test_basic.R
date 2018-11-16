@@ -52,7 +52,7 @@ test_that("Can compile when in different directory", {
     paths[idx] <- file.path(tmpdir[idx], files[idx])
   }
   latexdiff(paths[1], paths[2], open = FALSE)
-  check_and_remove(file.path(tmpdir[1], "diff.pdf"))
+  check_and_remove("diff.pdf")
 })
 
 

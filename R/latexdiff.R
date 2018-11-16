@@ -51,7 +51,7 @@
 latexdiff <- function (
         path1,
         path2,
-        output        = fs::path(fs::path_dir(path1), "diff"),
+        output        = "diff",
         open          = interactive(),
         clean         = TRUE,
         quiet         = TRUE,
