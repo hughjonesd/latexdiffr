@@ -6,7 +6,7 @@
 #'
 #' @param path1 Path to the first file.
 #' @param path2 Path to the second file.
-#' @param output Path to the output, without the file extension.
+#' @param output File name of the output, without the `.tex` extension.
 #' @param open Logical. Automatically open the resulting PDF?
 #' @param clean Logical. Clean up intermediate TeX files?
 #' @param quiet Logical. Suppress printing? Passed to `render` and `knit`, and hides standard error

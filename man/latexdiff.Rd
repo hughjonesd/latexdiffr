@@ -12,7 +12,7 @@ latexdiff(path1, path2, output = "diff", open = interactive(),
 
 \item{path2}{Path to the second file.}
 
-\item{output}{Path to the output, without the file extension.}
+\item{output}{File name of the output, without the \code{.tex} extension.}
 
 \item{open}{Logical. Automatically open the resulting PDF?}
 
