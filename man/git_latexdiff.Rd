@@ -31,5 +31,6 @@ create the tex file manually.
 \examples{
 \dontrun{
 git_latexdiff("file1.Rmd", "HEAD^")
+git_latexdiff("file1.Rmd", "master@{7 days ago}")
 }
 }

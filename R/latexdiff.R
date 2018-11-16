@@ -171,6 +171,7 @@ latexdiff <- function (
 #' @examples
 #' \dontrun{
 #' git_latexdiff("file1.Rmd", "HEAD^")
+#' git_latexdiff("file1.Rmd", "master@{7 days ago}")
 #' }
 git_latexdiff <- function (path, revision, clean = TRUE, ...) {
   dir <- fs::path_dir(path)
