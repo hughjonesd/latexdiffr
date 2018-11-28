@@ -118,6 +118,7 @@ latexdiff <- function (
   old_wd <- getwd()
   setwd(fs::path_dir(diff_tex_path))
   diff_tex_file <- fs::path_file(diff_tex_path)
+  pdf_start_time <- Sys.time()
   tryCatch({
 
       if (requireNamespace("tinytex", quietly = TRUE)) {
@@ -140,7 +141,10 @@ latexdiff <- function (
   }
 
   diff_pdf_path <- paste0(output, ".pdf")
-  if (! fs::file_exists(diff_pdf_path)) stop("Failed to create PDF.")
+  if (! fs::file_exists(diff_pdf_path) ||
+        ! fs::file_info(diff_pdf_path)$modification_time >= pdf_start_time) {
+    stop("Failed to create PDF.")
+  }
   if (open) {
     auto_open(diff_pdf_path)
   }

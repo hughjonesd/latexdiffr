@@ -61,6 +61,21 @@ test_that("Wrong file extension gives error", {
 })
 
 
+test_that("Gives error when diff.pdf is old", {
+  file1 <- "foo-prerendered.tex"
+  file2 <- "bar-prerendered.tex"
+
+  tryCatch(
+    latexdiff(file1, file2), # should work
+    error = function (e) skip("Couldn't create a good diff.pdf")
+  )
+
+  # currently, changing the author gives an error
+  expect_error(latexdiff(file1, "bar-newauthor-rmd.Rmd"), "Failed to create")
+  if (file.exists("diff.pdf")) file.remove("diff.pdf")
+})
+
+
 test_that("git_latexdiff works", {
   skip_on_cran()
   skip_on_travis()
