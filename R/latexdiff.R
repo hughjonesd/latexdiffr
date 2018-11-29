@@ -122,8 +122,7 @@ latexdiff <- function (
   tryCatch({
 
       if (requireNamespace("tinytex", quietly = TRUE)) {
-        tinytex::latexmk(diff_tex_file,
-              engine_args = c("-interaction", "nonstopmode"), clean = clean)
+        tinytex::latexmk(diff_tex_file, clean = clean)
       } else {
         tools::texi2pdf(diff_tex_file, clean = clean)
       }
