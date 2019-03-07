@@ -187,7 +187,8 @@ git_latexdiff <- function (path, revision, clean = TRUE, ...) {
   root <- rprojroot::is_git_root
   git_path <- fs::path_rel(path,
         rprojroot::find_root_file("", criterion = root))
-  show_arg <- sprintf("%s:%s", revision, git_path)
+  # only double quotes work on some systems:
+  show_arg <- sprintf('"%s:%s"', revision, git_path)
 
   if (clean) {
     on.exit({
