@@ -187,14 +187,14 @@ git_latexdiff <- function (path, revision, clean = TRUE, ...) {
   root <- rprojroot::is_git_root
   git_path <- fs::path_rel(path,
         rprojroot::find_root_file("", criterion = root))
-  show_arg <- sprintf("'%s:%s'", revision, git_path)
+  show_arg <- sprintf("%s:%s", revision, git_path)
 
   if (clean) {
     on.exit({
       if (fs::file_exists(tmp_filepath)) fs::file_delete(tmp_filepath)
     })
   }
-  res <- system2("git", c("show", show_arg), stdout = tmp_filepath, 
+  res <- system2("git", c("show", show_arg), stdout = tmp_filepath,
         stderr = FALSE)
   if (res != 0) {
     warning(sprintf("`git show %s` returned %s", show_arg, res))
