@@ -194,7 +194,8 @@ git_latexdiff <- function (path, revision, clean = TRUE, ...) {
       if (fs::file_exists(tmp_filepath)) fs::file_delete(tmp_filepath)
     })
   }
-  res <- system2("git", c("show", show_arg), stdout = tmp_filepath)
+  res <- system2("git", c("show", show_arg), stdout = tmp_filepath, 
+        stderr = FALSE)
   if (res != 0) {
     warning(sprintf("`git show %s` returned %s", show_arg, res))
   }
