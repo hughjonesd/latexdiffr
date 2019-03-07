@@ -8,6 +8,14 @@ check_and_remove <- function (path) {
 }
 
 
+in_git <- function () {
+  root <- rprojroot::is_git_root
+  in_git <- try({
+    rprojroot::find_root_file("", criterion = root)
+  }, silent = TRUE)
+  return(! inherits(in_git, "try-error"))
+}
+
 test_that("All 3 file types compile", {
   files1 <- c("foo-prerendered.tex", "foo-rnw.Rnw", "foo-rmd.Rmd")
   files2 <- c("bar-prerendered.tex", "bar-rnw.Rnw", "bar-rmd.Rmd")
@@ -59,6 +67,12 @@ test_that("Can compile when in different directory", {
 test_that("Works with spaces in filename", {
   expect_error(latexdiff("foo-prerendered.tex", "foo with spaces.tex"), regexp = NA)
   check_and_remove("diff.pdf")
+
+  skip_on_cran()
+  skip_on_travis()
+  skip_if_not(in_git())
+
+  expect_error(git_latexdiff("foo with spaces.tex", "89434f2a"), regexp = NA)
 })
 
 
@@ -85,11 +99,7 @@ test_that("Gives error when diff.pdf is old", {
 test_that("git_latexdiff works", {
   skip_on_cran()
   skip_on_travis()
+  skip_if_not(in_git())
 
-  root <- rprojroot::is_git_root
-  in_git <- try({
-    rprojroot::find_root_file("", criterion = root)
-  }, silent = TRUE)
-  skip_if(inherits(in_git, "try-error"), "Not in git")
   expect_error(git_latexdiff("git-changes.Rmd", "0ae84d"), regexp = NA)
 })
