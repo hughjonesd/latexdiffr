@@ -56,6 +56,12 @@ test_that("Can compile when in different directory", {
 })
 
 
+test_that("Works with spaces in filename", {
+  expect_error(latexdiff("foo-prerendered.tex", "foo with spaces.tex"), regexp = NA)
+  check_and_remove("diff.pdf")
+})
+
+
 test_that("Wrong file extension gives error", {
   expect_error(latexdiff("bad.txt", "foo-rmd.Rmd"))
 })
