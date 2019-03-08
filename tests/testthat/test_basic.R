@@ -65,6 +65,7 @@ test_that("Can compile when in different directory", {
 
 
 test_that("Works with spaces in filename", {
+  file.rename("foo_with_spaces.tex", "foo with spaces.tex") # avoids R CMD check issue
   expect_error(latexdiff("foo-prerendered.tex", "foo with spaces.tex"), regexp = NA)
   check_and_remove("diff.pdf")
 
@@ -75,6 +76,9 @@ test_that("Works with spaces in filename", {
   expect_error(git_latexdiff("foo with spaces.tex", "89434f2a"), regexp = NA)
 })
 
+teardown({
+  try(file.rename("foo with spaces.tex", "foo_with_spaces.tex"), silent = TRUE)
+})
 
 test_that("Wrong file extension gives error", {
   expect_error(latexdiff("bad.txt", "foo-rmd.Rmd"))
