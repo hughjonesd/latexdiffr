@@ -4,3 +4,4 @@
 ^.*\.Rproj$
 ^diff-screenshot.png$
 ^\.Rproj\.user$
+^TODO\.md$
