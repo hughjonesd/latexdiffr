@@ -17,7 +17,6 @@ cache:
 
 build_script:
   - travis-tool.sh install_deps
-  - tlmgr install latexdiff
 
 test_script:
   - travis-tool.sh run_tests
