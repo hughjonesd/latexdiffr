@@ -5,3 +5,5 @@
 ^diff-screenshot.png$
 ^\.Rproj\.user$
 ^TODO\.md$
+^cran-comments\.md$
+^CRAN-RELEASE$
