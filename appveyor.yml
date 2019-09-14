@@ -24,7 +24,7 @@ environment:
 
 build_script:
   - travis-tool.sh install_deps
-  - '%APPDATA%\TinyTex\bin\win32\tlmgr' install latexdiff
+  - SET PATH='%APPDATA%\TinyTex\bin\win32\;%PATH%'
 
 test_script:
   - travis-tool.sh run_tests
