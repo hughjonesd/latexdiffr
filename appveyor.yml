@@ -19,14 +19,13 @@ environment:
   # see https://github.com/krlmlr/r-appveyor#readme for details
   # USE_RTOOLS: true
   R_REMOTES_STANDALONE: true
+  TEXLIVE_PREFER_OWN: 1
 
 # Adapt as necessary starting from here
 
 build_script:
   - travis-tool.sh install_deps
   - cmd: Rscript -e "tinytex:::install_prebuilt()"
-  - cmd: xz --version
-  - cmd: ren xz.exe xz.exe.old
   - cmd: Rscript -e "tinytex::tlmgr_install('latexdiff')"
   - cmd: Rscript -e "tinytex::tlmgr_path('add')"
 
