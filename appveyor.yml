@@ -28,10 +28,10 @@ build_script:
   - cmd: Rscript -e "tinytex::install_tinytex()"
   - cmd: Rscript -e "tinytex::tlmgr_install('latexdiff')"
   - cmd: Rscript -e "tinytex::tlmgr_path('add')"
-  - set PATH=%APPDATA%\TinyTex\bin\;%PATH%
+  - set PATH=%APPDATA%\TinyTex\bin\win32;%PATH%
   - echo %PATH%
   - dir %APPDATA%\TinyTex
-  - dir %APPDATA%\TinyTex\bin
+  - dir %APPDATA%\TinyTex\bin'win32
   - dir %APPDATA%\TinyTex\texmf-dist\tex
   - dir %APPDATA%\TinyTex\texmf-dist\tex\latex\la*
 
