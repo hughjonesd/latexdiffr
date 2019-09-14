@@ -24,8 +24,9 @@ environment:
 
 build_script:
   - travis-tool.sh install_deps
+  - Rscript -e 'tinytex::install_tinytex()'
   - SET PATH='%APPDATA%\TinyTex\bin\win32\;%PATH%'
-  - echo 'path is %PATH'
+  - echo 'path is %PATH%'
   - echo 'contents of TinyTex bin win32'
   - dir '%APPDATA%\TinyTex\bin\win32\'
   - tlmgr install latexdiff
