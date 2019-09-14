@@ -28,6 +28,7 @@ build_script:
   - cmd: Rscript -e "tinytex::install_tinytex()"
   - cmd: Rscript -e "tinytex::tlmgr_install('latexdiff')"
   - cmd: Rscript -e "tinytex::tlmgr_path('add')"
+  - cmd: dir %APPDATA%\TinyTex\bin\win32
   - set PATH=%APPDATA%\TinyTex\bin\win32;%PATH%
   - cinst pandoc
   - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
