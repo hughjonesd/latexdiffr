@@ -28,6 +28,7 @@ build_script:
   - cmd: Rscript -e "tinytex::install_tinytex()"
   - cmd: Rscript -e "tinytex::tlmgr_install('latexdiff')"
   - cmd: Rscript -e "tinytex::tlmgr_path('add')"
+  - where latexdiff
 
 test_script:
   - travis-tool.sh run_tests
