@@ -31,7 +31,7 @@ build_script:
   - set PATH=%APPDATA%\TinyTex\scripts\latexdiff;%PATH%
   - dir %APPDATA%\TinyTex
   - dir %APPDATA%\TinyTex\scripts
-  - dir %APPDATA%\TinyTex\scripts'latexdiff
+  - dir %APPDATA%\TinyTex\scripts\latexdiff
   - cmd: where latexdiff
 
 test_script:
