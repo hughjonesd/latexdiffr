@@ -30,8 +30,10 @@ build_script:
   - cmd: Rscript -e "tinytex::tlmgr_path('add')"
   - set PATH=%APPDATA%\TinyTex\scripts\latexdiff;%PATH%
   - dir %APPDATA%\TinyTex
-  - dir %APPDATA%\TinyTex\scripts
-  - dir %APPDATA%\TinyTex\scripts\latexdiff
+  - dir %APPDATA%\TinyTex\bin
+  - dir %APPDATA%\TinyTex\tlpkg
+  - dir %APPDATA%\TinyTex\texmf-dist\tex
+  - dir %APPDATA%\TinyTex\texmf-dist\tex\latex
   - cmd: where latexdiff
 
 test_script:
