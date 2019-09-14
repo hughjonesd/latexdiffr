@@ -27,6 +27,7 @@ build_script:
   - Rscript -e 'tinytex::install_tinytex()'
   - Rscript -e 'tinytex::tlmgr_install(\'latexdiff\')'
   - Rscript -e 'tinytex::tlmgr_path(\'add\')'
+  - Rscript -e 'cat(2+2)'
   - where latexdiff
 
 test_script:
