@@ -28,13 +28,12 @@ build_script:
   - cmd: Rscript -e "tinytex::install_tinytex()"
   - cmd: Rscript -e "tinytex::tlmgr_install('latexdiff')"
   - cmd: Rscript -e "tinytex::tlmgr_path('add')"
-  - set PATH=%APPDATA%\TinyTex\scripts\latexdiff;%PATH%
+  - set PATH=%APPDATA%\TinyTex\bin\;%PATH%
+  - echo %PATH%
   - dir %APPDATA%\TinyTex
   - dir %APPDATA%\TinyTex\bin
-  - dir %APPDATA%\TinyTex\tlpkg
   - dir %APPDATA%\TinyTex\texmf-dist\tex
-  - dir %APPDATA%\TinyTex\texmf-dist\tex\latex
-  - cmd: where latexdiff
+  - dir %APPDATA%\TinyTex\texmf-dist\tex\latex\la*
 
 test_script:
   - travis-tool.sh run_tests
