@@ -25,7 +25,8 @@ environment:
 build_script:
   - travis-tool.sh install_deps
   - Rscript -e 'tinytex::install_tinytex()'
-  - Rscript -e 'tinytex::tlmgr_install(\'latexdiff\', path = TRUE)'
+  - Rscript -e 'tinytex::tlmgr_install(\'latexdiff\')'
+  - Rscript -e 'tinytex::tlmgr_path(\'add\')'
   - where latexdiff
 
 test_script:
