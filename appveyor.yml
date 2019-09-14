@@ -24,7 +24,7 @@ environment:
 
 build_script:
   - travis-tool.sh install_deps
-  - Rscript -e 'tinytex::install_tinytex(extra_packages = "latexdiff");'
+  - Rscript -e 'tinytex::install_tinytex();'
 
 test_script:
   - travis-tool.sh run_tests
