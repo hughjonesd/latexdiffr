@@ -23,6 +23,9 @@ brew install latexdiff
 
 # on Linux:
 sudo apt install latexdiff 
+
+# with tinytex
+Rscript -e "tinytex::tlmgr_install('latexdiff')"
 ```
 
 ## Example
@@ -30,6 +33,7 @@ sudo apt install latexdiff
 
 ``` r
 library(latexdiffr)
+# tinytex::tlmgr_path("add")
 latexdiff("file1.Rmd", "file2.Rmd")
 
 ```
