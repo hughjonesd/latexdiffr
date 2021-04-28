@@ -2,8 +2,6 @@
 
 context("Basic tests")
 
-which_cmd <- if (Sys.info()["sysname"] == "Windows") "where" else "which"
-skip_if(system2(which_cmd, "latexdiff") != 0)
 
 check_and_remove <- function (path) {
   expect_true(file.exists(path), label = sprintf("file.exists('%s')", path))

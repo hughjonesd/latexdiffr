@@ -6,3 +6,7 @@
 ^\.Rproj\.user$
 ^TODO\.md$
 ^\.github$
+^cran-comments\.md$
+^CRAN-RELEASE$
+
+
