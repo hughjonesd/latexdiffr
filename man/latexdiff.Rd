@@ -4,8 +4,16 @@
 \alias{latexdiff}
 \title{Produce a diff of two files using latexdiff}
 \usage{
-latexdiff(path1, path2, output = "diff", open = interactive(),
-  clean = TRUE, quiet = TRUE, output_format = NULL, ld_opts = NULL)
+latexdiff(
+  path1,
+  path2,
+  output = "diff",
+  open = interactive(),
+  clean = TRUE,
+  quiet = TRUE,
+  output_format = NULL,
+  ld_opts = NULL
+)
 }
 \arguments{
 \item{path1}{Path to the first file.}
@@ -22,7 +30,7 @@ latexdiff(path1, path2, output = "diff", open = interactive(),
 of \code{latexdiff} itself.}
 
 \item{output_format}{An rmarkdown output format for Rmd files, probably
-\code{\link[rmarkdown:latex_document]{rmarkdown::latex_document()}}. The default uses the options defined in the Rmd files.
+\code{\link[rmarkdown:pdf_document]{rmarkdown::latex_document()}}. The default uses the options defined in the Rmd files.
 YAML front matter.}
 
 \item{ld_opts}{Character vector of options to pass to \code{latexdiff}.}

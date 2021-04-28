@@ -1,8 +1,12 @@
+
+
 # latexdiffr
 
-[![Travis build status](https://travis-ci.org/hughjonesd/latexdiffr.svg?branch=master)](https://travis-ci.org/hughjonesd/latexdiffr)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/hughjonesd/latexdiffr/workflows/R-CMD-check/badge.svg)](https://github.com/hughjonesd/latexdiffr/actions)
 [![Coverage status](https://codecov.io/gh/hughjonesd/latexdiffr/branch/master/graph/badge.svg)](https://codecov.io/github/hughjonesd/latexdiffr?branch=master)
-
+<!-- badges: end -->
+  
 latexdiffr is a small library that uses the `latexdiff` command
 to create a diff of two Rmarkdown, .Rnw or TeX files.
 

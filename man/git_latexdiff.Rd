@@ -10,7 +10,7 @@ git_latexdiff(path, revision, clean = TRUE, ...)
 \item{path}{File path to diff}
 
 \item{revision}{Revision, specified in a form that \code{git} understands. See
-\code{man gitrevisions}}
+\verb{man gitrevisions}}
 
 \item{clean}{Clean up intermediate files, including the checked out file?}
 
