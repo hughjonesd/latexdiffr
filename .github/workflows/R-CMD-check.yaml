@@ -77,8 +77,7 @@ jobs:
         if: runner.os == 'MacOS'
         run: brew install latexdiff
 
-      - name: Setup tinytex on Mac
-        if: runner.os == 'MacOS'
+      - name: Setup tinytex
         uses: r-lib/actions/setup-tinytex@v1
         
       - name: Install tex packages
