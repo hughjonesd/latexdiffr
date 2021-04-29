@@ -79,6 +79,10 @@ jobs:
 
       - name: Setup tinytex
         uses: r-lib/actions/setup-tinytex@v1
+        
+      - name: Install tex packages
+        run: |
+          tlmgr install titling
        
       - name: test latexdiff
         run: |
