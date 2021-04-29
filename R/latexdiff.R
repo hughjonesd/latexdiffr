@@ -14,7 +14,8 @@
 #' @param output_format An rmarkdown output format for Rmd files, probably
 #'   [rmarkdown::latex_document()]. The default uses the options defined in the Rmd files.
 #'   YAML front matter.
-#' @param ld_opts Character vector of options to pass to `latexdiff`.
+#' @param ld_opts Character vector of options to pass to `latexdiff`. The
+#'   default avoids some problems with Rmd files
 #'
 #' @details
 #' File types are determined by extension,which should be one of `.tex`, `.Rmd`
@@ -56,7 +57,7 @@ latexdiff <- function (
         clean         = TRUE,
         quiet         = TRUE,
         output_format = NULL,
-        ld_opts       = NULL
+        ld_opts       = "--replace-context2cmd=\"none\""
       ) {
   force(quiet)
   paths <- c(path1, path2)

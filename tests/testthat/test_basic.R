@@ -95,8 +95,9 @@ test_that("Gives error when diff.pdf is old", {
     error = function (e) skip("Couldn't create a good diff.pdf")
   )
 
-  # currently, changing the author gives an error
-  expect_error(latexdiff(file1, "bar-newauthor-rmd.Rmd"), "Failed to create")
+  skip_if_not(file.exists("diff.pdf"), message = "diff.pdf didn't get created")
+
+  expect_error(latexdiff(file1, "wont-compile.tex"), "Failed to create")
   if (file.exists("diff.pdf")) file.remove("diff.pdf")
 })
 
