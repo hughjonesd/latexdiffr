@@ -34,7 +34,7 @@ of \code{latexdiff} itself.}
 YAML front matter.}
 
 \item{ld_opts}{Character vector of options to pass to \code{latexdiff}. The
-default avoids some problems with Rmd files}
+default avoids some problems with Rmd files.}
 }
 \value{
 Invisible NULL.
@@ -57,7 +57,6 @@ sudo apt install latexdiff
 
 \code{latexdiff} is not perfect. Some changes will confuse it. In particular:
 \itemize{
-\item Changing the document title may cause failures.
 \item If input and output files are in different directories, the \code{"diff.tex"}
 file may have incorrect paths for e.g. included figures. \code{latexdiff}
 will add the \code{--flatten} option in this case, but things still are

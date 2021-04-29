@@ -15,7 +15,7 @@
 #'   [rmarkdown::latex_document()]. The default uses the options defined in the Rmd files.
 #'   YAML front matter.
 #' @param ld_opts Character vector of options to pass to `latexdiff`. The
-#'   default avoids some problems with Rmd files
+#'   default avoids some problems with Rmd files.
 #'
 #' @details
 #' File types are determined by extension,which should be one of `.tex`, `.Rmd`
@@ -34,7 +34,6 @@
 #'
 #' `latexdiff` is not perfect. Some changes will confuse it. In particular:
 #'
-#' * Changing the document title may cause failures.
 #' * If input and output files are in different directories, the `"diff.tex"`
 #'    file may have incorrect paths for e.g. included figures. `latexdiff`
 #'    will add the `--flatten` option in this case, but things still are
