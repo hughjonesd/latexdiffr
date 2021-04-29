@@ -70,8 +70,7 @@ test_that("Works with spaces in filename", {
   expect_error(latexdiff("foo-prerendered.tex", "foo with spaces.tex"), regexp = NA)
   check_and_remove("diff.pdf")
 
-  skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
   skip_if_not(in_git())
 
   expect_error(git_latexdiff("foo with spaces.tex", "89434f2a"), regexp = NA)
