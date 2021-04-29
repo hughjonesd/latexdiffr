@@ -69,6 +69,9 @@ jobs:
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
+      - name: Setup tinytex
+        uses: r-lib/actions/setup-tinytex@v1
+       
       - name: Install latexdiff on Linux
         if: runner.os == 'Linux'
         run: sudo apt-get install latexdiff
@@ -78,7 +81,6 @@ jobs:
         run: brew install latexdiff
 
       - name: test latexdiff
-        uses: r-lib/actions/setup-tinytex@v1
         run: |
           cd tests/testthat
           latexdiff foo-prerendered.tex bar-prerendered.tex > tmp.tex
