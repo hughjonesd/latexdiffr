@@ -79,7 +79,7 @@ jobs:
 
       - name: Setup tinytex
         uses: r-lib/actions/setup-tinytex@v1
-        
+
       - name: Install tex packages
         run: |
           tlmgr install titling ulem oberdiek
@@ -98,3 +98,8 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
+
+      - name: Test coverage
+        if: success()
+        run: covr::codecov()
+        shell: Rscript {0}
