@@ -82,7 +82,7 @@ jobs:
         
       - name: Install tex packages
         run: |
-          tlmgr install titling ulem settobox
+          tlmgr install titling ulem oberdiek
        
       - name: test latexdiff
         run: |
