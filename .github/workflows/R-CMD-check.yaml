@@ -77,18 +77,13 @@ jobs:
         if: runner.os == 'MacOS'
         run: brew install latexdiff
 
-      - name: Setup tinytex
+      - name: Setup tinytex on Mac
+        if: runner.os == 'MacOS'
         uses: r-lib/actions/setup-tinytex@v1
         
       - name: Install tex packages
         run: |
           tlmgr install titling ulem oberdiek
-       
-      - name: test latexdiff
-        run: |
-          cd tests/testthat
-          latexdiff foo-prerendered.tex bar-prerendered.tex > tmp.tex
-          pdflatex tmp.tex
 
       - name: Check
         env:
