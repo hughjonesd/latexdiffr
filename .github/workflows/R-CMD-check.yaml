@@ -78,6 +78,7 @@ jobs:
         run: brew install latexdiff
 
       - name: test latexdiff
+        uses: r-lib/actions/setup-tinytex@v1
         run: |
           cd tests/testthat
           latexdiff foo-prerendered.tex bar-prerendered.tex > tmp.tex
