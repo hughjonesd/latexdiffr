@@ -77,6 +77,12 @@ jobs:
         if: runner.os == 'MacOS'
         run: brew install latexdiff
 
+      - name: test latexdiff
+        run: |
+          cd tests/testthat
+          latexdiff foo-prerendered.tex bar-prerendered.tex > tmp.tex
+          pdflatex tmp.tex
+
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
