@@ -7,6 +7,7 @@ I assume is not available on CRAN. So, most tests are turned off.
 * local OS X install, R 4.0.3
 * github actions, r-devel and r-release on MacOS and Linux
 * rhub, r-devel and r-release on Windows and Linux
+* win-builder did not respond
 
 ## R CMD check results
 
