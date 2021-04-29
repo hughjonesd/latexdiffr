@@ -12,7 +12,7 @@ latexdiff(
   clean = TRUE,
   quiet = TRUE,
   output_format = NULL,
-  ld_opts = NULL
+  ld_opts = "--replace-context2cmd=\\"none\\""
 )
 }
 \arguments{
@@ -33,7 +33,8 @@ of \code{latexdiff} itself.}
 \code{\link[rmarkdown:pdf_document]{rmarkdown::latex_document()}}. The default uses the options defined in the Rmd files.
 YAML front matter.}
 
-\item{ld_opts}{Character vector of options to pass to \code{latexdiff}.}
+\item{ld_opts}{Character vector of options to pass to \code{latexdiff}. The
+default avoids some problems with Rmd files}
 }
 \value{
 Invisible NULL.
