@@ -1,7 +1,6 @@
 
 
-context("Basic tests")
-
+skip_on_cran()
 
 check_and_remove <- function (path) {
   expect_true(file.exists(path), label = sprintf("file.exists('%s')", path))

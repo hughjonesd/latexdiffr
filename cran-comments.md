@@ -1,5 +1,5 @@
 
-First release. This package requires the latexdiff utility which
+First release. This package requires the latexdiff utility, which
 I assume is not available on CRAN. So, most tests are turned off.
 
 ## Test environments
