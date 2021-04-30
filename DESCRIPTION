@@ -1,7 +1,7 @@
 Package: latexdiffr
 Type: Package
 Title: Diff 'rmarkdown' Files Using the 'latexdiff' Utility
-Version: 0.1.0
+Version: 0.1.0.9000
 Author: David Hugh-Jones <davidhughjones@gmail.com>
 Maintainer: David Hugh-Jones <davidhughjones@gmail.com>
 Description: Produces a PDF diff of two 'rmarkdown', Sweave or TeX files,  using
