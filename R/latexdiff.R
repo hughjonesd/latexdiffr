@@ -7,7 +7,8 @@
 #' @param path1 Path to the first file.
 #' @param path2 Path to the second file.
 #' @param output File name of the output, without the `.tex` extension.
-#' @param open Logical. Automatically open the resulting PDF?
+#' @param compile Logical. Compile the diff from tex to pdf?
+#' @param open Logical. Automatically open the resulting pdf?
 #' @param clean Logical. Clean up intermediate TeX files?
 #' @param quiet Logical. Suppress printing? Passed to `render` and `knit`, and hides standard error
 #'   of `latexdiff` itself.
@@ -18,9 +19,6 @@
 #'   default avoids some problems with Rmd files.
 #'
 #' @details
-#' File types are determined by extension,which should be one of `.tex`, `.Rmd`
-#' or `.rnw`. Rmd files are processed by [rmarkdown::render()]. Rnw files
-#' are processed by [knitr::knit()].
 #'
 #' You will need the `latexdiff` utility installed on your system:
 #'
@@ -32,13 +30,19 @@
 #' sudo apt install latexdiff
 #' ```
 #'
+#' File types are determined by extension,which should be one of `.tex`, `.Rmd`
+#' or `.rnw`. Rmd files are processed by [rmarkdown::render()]. Rnw files
+#' are processed by [knitr::knit()].
+#'
 #' `latexdiff` is not perfect. Some changes will confuse it. In particular:
 #'
 #' * If input and output files are in different directories, the `"diff.tex"`
-#'    file may have incorrect paths for e.g. included figures. `latexdiff`
-#'    will add the `--flatten` option in this case, but things still are
-#'    not guaranteed to work.
-
+#'   file may have incorrect paths for e.g. included figures. `latexdiff`
+#'   will add the `--flatten` option in this case, but things still are
+#'   not guaranteed to work.
+#' * Sometimes the `"diff.tex"` file fails to compile to pdf. If so,
+#'   set `compile = FALSE` and try editing the tex file manually.
+#'
 #' @return
 #' Invisible NULL.
 #'
@@ -52,6 +56,7 @@ latexdiff <- function (
         path1,
         path2,
         output        = "diff",
+        compile       = TRUE,
         open          = interactive(),
         clean         = TRUE,
         quiet         = TRUE,
@@ -105,6 +110,9 @@ latexdiff <- function (
             rmarkdown::render(paths[idx], output_format = output_format, quiet = quiet)
           }
   }
+  on.exit({
+    if (clean) file.remove(setdiff(tex_paths, paths))
+  })
 
   diff_tex_path <- paste0(output, ".tex")
   latexdiff_stderr <- if (quiet) FALSE else ""
@@ -115,38 +123,39 @@ latexdiff <- function (
         )
   if (ld_ret != 0L) stop("latexdiff command returned an error")
 
-  old_wd <- getwd()
-  setwd(fs::path_dir(diff_tex_path))
-  on.exit(setwd(old_wd))
-  diff_tex_file <- fs::path_file(diff_tex_path)
-  pdf_start_time <- Sys.time()
-  tryCatch({
+  if (compile) {
+    old_wd <- getwd()
+    setwd(fs::path_dir(diff_tex_path))
+    on.exit(setwd(old_wd))
+    diff_tex_file <- fs::path_file(diff_tex_path)
+    pdf_start_time <- Sys.time()
+    tryCatch({
 
-      if (requireNamespace("tinytex", quietly = TRUE)) {
-        tinytex::latexmk(diff_tex_file, clean = clean)
-      } else {
-        tools::texi2pdf(diff_tex_file, clean = clean)
-      }
-    },
-    error = function (e) {
-      warning("PDF creation gave an error:\n\t", e$message,
-            "\nSometimes PDF creation still worked, so let's continue.")
-    },
-    finally = setwd(old_wd)
-  )
+        if (requireNamespace("tinytex", quietly = TRUE)) {
+          tinytex::latexmk(diff_tex_file, clean = clean)
+        } else {
+          tools::texi2pdf(diff_tex_file, clean = clean)
+        }
+      },
+      error = function (e) {
+        warning("PDF creation gave an error:\n\t", e$message,
+              "\nSometimes PDF creation still worked, so let's continue.")
+      },
+      finally = setwd(old_wd)
+    )
 
-  if (clean) {
-    file.remove(setdiff(tex_paths, paths))
-    file.remove(diff_tex_path)
-  }
+    if (clean) {
+      file.remove(diff_tex_path)
+    }
 
-  diff_pdf_path <- paste0(output, ".pdf")
-  if (! fs::file_exists(diff_pdf_path) ||
-        ! fs::file_info(diff_pdf_path)$modification_time >= pdf_start_time) {
-    stop("Failed to create PDF.")
-  }
-  if (open) {
-    auto_open(diff_pdf_path)
+    diff_pdf_path <- paste0(output, ".pdf")
+    if (! fs::file_exists(diff_pdf_path) ||
+          ! fs::file_info(diff_pdf_path)$modification_time >= pdf_start_time) {
+      stop("Failed to create PDF.")
+    }
+    if (open) {
+      auto_open(diff_pdf_path)
+    }
   }
 
   return(invisible(NULL))
