@@ -100,10 +100,22 @@ test_that("Gives error when diff.pdf is old", {
 })
 
 
+test_that("Works correctly when compile = FALSE", {
+  file1 <- "foo-prerendered.tex"
+  file2 <- "bar-prerendered.tex"
+
+  if (file.exists("diff.pdf")) file.remove("diff.pdf")
+  latexdiff(file1, file2, compile = FALSE)
+  check_and_remove("diff.tex")
+  expect_false(file.exists("diff.pdf"))
+})
+
+
 test_that("git_latexdiff works", {
   skip_on_cran()
   skip_on_travis()
   skip_if_not(in_git())
 
   expect_error(git_latexdiff("git-changes.Rmd", "0ae84d"), regexp = NA)
+  check_and_remove("diff.pdf")
 })
