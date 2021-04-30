@@ -117,6 +117,7 @@ latexdiff <- function (
 
   old_wd <- getwd()
   setwd(fs::path_dir(diff_tex_path))
+  on.exit(setwd(old_wd))
   diff_tex_file <- fs::path_file(diff_tex_path)
   pdf_start_time <- Sys.time()
   tryCatch({
