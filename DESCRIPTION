@@ -8,7 +8,10 @@ Description: Produces a PDF diff of two 'rmarkdown', Sweave or TeX files,  using
     the external 'latexdiff' utility.
 License: MIT + file LICENSE
 Encoding: UTF-8
-Imports: fs, rprojroot
+Imports: 
+    assertthat,
+    fs,
+    rprojroot
 Suggests: 
     tinytex,
     rmarkdown,

@@ -2,3 +2,4 @@
 
 export(git_latexdiff)
 export(latexdiff)
+import(assertthat)

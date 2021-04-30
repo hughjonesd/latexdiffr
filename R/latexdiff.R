@@ -1,4 +1,8 @@
 
+#' @import assertthat
+NULL
+
+
 #' Produce a diff of two files using latexdiff
 #'
 #' `latexdiff()` uses the external utility `latexdiff` to create a PDF file
@@ -63,6 +67,10 @@ latexdiff <- function (
         output_format = NULL,
         ld_opts       = "--replace-context2cmd=\"none\""
       ) {
+  assert_that(is.string(path1), is.string(path2), is.string(output),
+                is.string(ld_opts))
+  assert_that(is.flag(compile), is.flag(open), is.flag(clean), is.flag(quiet))
+
   force(quiet)
   paths <- c(path1, path2)
   tex_paths <- rep(NA_character_, 2)
@@ -187,6 +195,8 @@ latexdiff <- function (
 #' git_latexdiff("file1.Rmd", "master@{7 days ago}")
 #' }
 git_latexdiff <- function (path, revision, clean = TRUE, ...) {
+  assert_that(is.string(path), is.string(revision), is.flag(clean))
+
   dir <- fs::path_dir(path)
   cur_file <- fs::path_file(path)
   cur_filebase <- fs::path_ext_remove(cur_file)
