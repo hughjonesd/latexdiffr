@@ -2,11 +2,18 @@ Package: latexdiffr
 Type: Package
 Title: Diff 'rmarkdown' Files Using the 'latexdiff' Utility
 Version: 0.1.0.9000
-Author: David Hugh-Jones <davidhughjones@gmail.com>
+Authors@R:
+    person(given = "David",
+           family = "Hugh-Jones",
+           role = c("aut", "cre"),
+           email = "davidhughjones@gmail.com")
+Author: David Hugh-Jones [aut, cre]
 Maintainer: David Hugh-Jones <davidhughjones@gmail.com>
 Description: Produces a PDF diff of two 'rmarkdown', Sweave or TeX files,  using
     the external 'latexdiff' utility.
 License: MIT + file LICENSE
+URL: https://github.com/hughjonesd/latexdiffr
+BugReports: https://github.com/hughjonesd/latexdiffr/issues
 Encoding: UTF-8
 Imports: 
     assertthat,
