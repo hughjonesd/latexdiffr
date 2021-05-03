@@ -4,6 +4,7 @@
 
 
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/latexdiffr)](https://CRAN.R-project.org/package=latexdiffr)
 [![R-CMD-check](https://github.com/hughjonesd/latexdiffr/workflows/R-CMD-check/badge.svg)](https://github.com/hughjonesd/latexdiffr/actions)
 [![Coverage status](https://codecov.io/gh/hughjonesd/latexdiffr/branch/master/graph/badge.svg)](https://codecov.io/github/hughjonesd/latexdiffr?branch=master)
 <!-- badges: end -->
