@@ -16,8 +16,8 @@ in_git <- function () {
   return(! inherits(in_git, "try-error"))
 }
 
-test_that("All 3 file types compile", {
-  files1 <- c("foo-prerendered.tex", "foo-rnw.Rnw", "foo-rmd.Rmd")
+test_that("All file types compile", {
+  files1 <- c("foo-prerendered.tex", "foo-rnw.Rnw", "foo-rmd.Rmd", "foo-qmd.qmd")
   files2 <- c("bar-prerendered.tex", "bar-rnw.Rnw", "bar-rmd.Rmd")
 
   skip_if_not_installed("rmarkdown")

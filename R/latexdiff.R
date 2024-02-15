@@ -119,7 +119,8 @@ latexdiff <- function (
             rmarkdown::render(paths[idx], output_format = output_format, quiet = quiet)
           } else if (extensions[idx] == "qmd") {
             loadNamespace("quarto")
-            tex_file <- fs::path_file(fs::path_ext_set(paths[idx], "qmd"))
+            tex_file <- fs::path_ext_set(paths[idx], "tex")
+            tex_file <- fs::path_file(tex_file)
             quarto::quarto_render(paths[idx], output_format = "latex",
                                   output_file = tex_file, quiet = quiet)
             tex_file

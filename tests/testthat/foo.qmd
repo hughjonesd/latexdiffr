@@ -1,6 +1,0 @@
----
-title: "foo"
-format: pdf
----
-
-Does it compile?
