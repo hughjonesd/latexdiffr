@@ -1,6 +1,6 @@
 Package: latexdiffr
 Type: Package
-Title: Diff 'rmarkdown' Files Using the 'latexdiff' Utility
+Title: Diff 'rmarkdown' or 'quarto' Files Using the 'latexdiff' Utility
 Version: 0.2.0
 Authors@R:
     person(given = "David",
@@ -9,8 +9,8 @@ Authors@R:
            email = "davidhughjones@gmail.com")
 Author: David Hugh-Jones [aut, cre]
 Maintainer: David Hugh-Jones <davidhughjones@gmail.com>
-Description: Produces a PDF diff of two 'rmarkdown', Sweave or TeX files,  using
-    the external 'latexdiff' utility.
+Description: Produces a PDF diff of two 'rmarkdown', 'quarto', Sweave or TeX 
+  files, using the external 'latexdiff' utility.
 License: MIT + file LICENSE
 URL: https://github.com/hughjonesd/latexdiffr
 BugReports: https://github.com/hughjonesd/latexdiffr/issues
