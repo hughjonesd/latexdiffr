@@ -47,12 +47,14 @@ Invisible NULL.
 showing differences between two Rmd, Rnw or TeX files.
 }
 \details{
-You will need the \code{latexdiff} utility installed on your system:\preformatted{# on MacOS:
+You will need the \code{latexdiff} utility installed on your system:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# on MacOS:
 brew install latexdiff
 
 # on Linux:
 sudo apt install latexdiff
-}
+}\if{html}{\out{</div>}}
 
 File types are determined by extension,which should be one of \code{.tex}, \code{.Rmd}
 or \code{.rnw}. Rmd files are processed by \code{\link[rmarkdown:render]{rmarkdown::render()}}. Rnw files

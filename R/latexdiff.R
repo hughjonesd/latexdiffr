@@ -34,9 +34,10 @@ NULL
 #' sudo apt install latexdiff
 #' ```
 #'
-#' File types are determined by extension,which should be one of `.tex`, `.Rmd`
-#' or `.rnw`. Rmd files are processed by [rmarkdown::render()]. Rnw files
-#' are processed by [knitr::knit()].
+#' File types are determined by extension,which should be one of `.tex`, `.Rmd`,
+#' `.qmd` or `.rnw`. Rmd files are processed by [rmarkdown::render()]. Rnw files
+#' are processed by [knitr::knit()]. qmd files are processed by
+#' [quarto::quarto_render()].
 #'
 #' `latexdiff` is not perfect. Some changes will confuse it. In particular:
 #'
@@ -90,11 +91,11 @@ latexdiff <- function (
   }
 
   extensions <- tolower(fs::path_ext(paths))
-  if (! all(extensions %in% c("rmd", "rnw", "tex"))) {
+  if (! all(extensions %in% c("rmd", "rnw", "tex", "qmd"))) {
     stop(sprintf("Unrecognized file types: %s, %s.",
             fs::path_file(path1),
             fs::path_file(path2)),
-          "Files must end in '.Rmd', '.Rnw' or '.tex'")
+          "Files must end in '.Rmd', '.qmd', '.Rnw' or '.tex'")
   }
 
   for (idx in 1:2) {
@@ -116,6 +117,12 @@ latexdiff <- function (
               output_format <- do.call(rmarkdown::latex_document, doc_opts)
             }
             rmarkdown::render(paths[idx], output_format = output_format, quiet = quiet)
+          } else if (extensions[idx] == "qmd") {
+            loadNamespace("quarto")
+            tex_path <- sub("\\.qmd$", ".tex", paths[idx])
+            quarto::quarto_render(paths[idx], output_format = "latex",
+                                  output_file = tex_path, quiet = quiet)
+            tex_path
           }
   }
   on.exit({
