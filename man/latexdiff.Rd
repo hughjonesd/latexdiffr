@@ -44,7 +44,7 @@ Invisible NULL.
 }
 \description{
 \code{latexdiff()} uses the external utility \code{latexdiff} to create a PDF file
-showing differences between two Rmd, Rnw or TeX files.
+showing differences between two Rmd, qmd, Rnw or TeX files.
 }
 \details{
 You will need the \code{latexdiff} utility installed on your system:

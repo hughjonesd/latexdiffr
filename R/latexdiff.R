@@ -6,7 +6,7 @@ NULL
 #' Produce a diff of two files using latexdiff
 #'
 #' `latexdiff()` uses the external utility `latexdiff` to create a PDF file
-#' showing differences between two Rmd, Rnw or TeX files.
+#' showing differences between two Rmd, qmd, Rnw or TeX files.
 #'
 #' @param path1 Path to the first file.
 #' @param path2 Path to the second file.
