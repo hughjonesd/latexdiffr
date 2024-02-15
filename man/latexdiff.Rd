@@ -56,9 +56,10 @@ brew install latexdiff
 sudo apt install latexdiff
 }\if{html}{\out{</div>}}
 
-File types are determined by extension,which should be one of \code{.tex}, \code{.Rmd}
-or \code{.rnw}. Rmd files are processed by \code{\link[rmarkdown:render]{rmarkdown::render()}}. Rnw files
-are processed by \code{\link[knitr:knit]{knitr::knit()}}.
+File types are determined by extension,which should be one of \code{.tex}, \code{.Rmd},
+\code{.qmd} or \code{.rnw}. Rmd files are processed by \code{\link[rmarkdown:render]{rmarkdown::render()}}. Rnw files
+are processed by \code{\link[knitr:knit]{knitr::knit()}}. qmd files are processed by
+\code{\link[quarto:quarto_render]{quarto::quarto_render()}}.
 
 \code{latexdiff} is not perfect. Some changes will confuse it. In particular:
 \itemize{
