@@ -23,7 +23,7 @@ Suggests:
     tinytex,
     rmarkdown,
     knitr,
-    quarto
+    quarto,
     testthat,
     covr
 SystemRequirements: latexdiff
