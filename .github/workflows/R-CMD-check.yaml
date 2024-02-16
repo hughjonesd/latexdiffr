@@ -43,7 +43,7 @@ jobs:
           # sudo make install
           # cd ..
           rm -rf latexdiff
-          "${RUNNER_TEMP}/latexdiff" --version
+          "${RUNNER_TEMP}/latexdiff/latexdiff" --version
 
       - uses: r-lib/actions/setup-pandoc@v2
 
