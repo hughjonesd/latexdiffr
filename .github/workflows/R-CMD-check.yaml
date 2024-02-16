@@ -39,6 +39,7 @@ jobs:
           if [[ "$RUNNER_OS" == "Windows" ]]; then
             cp -R latexdiff "/c/Program Files/"
             echo "C:\Program Files\latexdiff" >> $GITHUB_PATH
+            echo $GITHUB_PATH
             latexdiff --version
           else
             sudo make install
