@@ -3,3 +3,12 @@
 .RData
 .Ruserdata
 .DS_Store
+tests/testthat/*-rmd.tex
+tests/testthat/*-rnw.tex
+tests/testthat/*-qmd.tex
+tests/testthat/*-rmd.html
+tests/testthat/*-qmd.html
+tests/testthat/foo.pdf
+tests/testthat/foo-qmd_files
+tests/testthat/foo.tex
+tests/testthat/git-changes*.tex

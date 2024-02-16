@@ -9,3 +9,7 @@
 ^cran-comments\.md$
 ^CRAN-RELEASE$
 ^CRAN-SUBMISSION$
+^tests/testthat/bar-(rmd|rnw)\.tex$
+^tests/testthat/foo-(rmd|qmd|rnw)\.tex$
+^tests/testthat/foo\.pdf$
+^tests/testthat/git-changes.*\.tex$
