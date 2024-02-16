@@ -40,7 +40,8 @@ jobs:
             mkdir -p "$HOME/.local/bin"
             cp -R latexdiff "$HOME/.local/bin"
             echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
-            echo $GITHUB_PATH
+            echo "$PATH"
+            ls "$HOME/.local/bin/latexdiff"
             latexdiff --version
           else
             cd latexdiff
