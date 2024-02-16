@@ -1,3 +1,5 @@
+# latexdiffr (development version)
+
 # latexdiffr 0.2.0
 
 * Added a `compile` option to (not) compile the diff.tex file to pdf.
