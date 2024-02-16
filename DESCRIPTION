@@ -1,6 +1,6 @@
 Package: latexdiffr
 Type: Package
-Title: Diff 'rmarkdown' or 'quarto' Files Using the 'latexdiff' Utility
+Title: Diff TeX, 'rmarkdown' or 'quarto' Files Using the 'latexdiff' Utility
 Version: 0.2.0
 Authors@R:
     person(given = "David",
