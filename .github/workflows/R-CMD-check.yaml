@@ -36,14 +36,14 @@ jobs:
         run: |
           curl -L -s https://mirrors.ctan.org/support/latexdiff.zip -o latexdiff.zip
           unzip latexdiff.zip
-          cd latexdiff
           if [[ "$RUNNER_OS" == "Windows" ]]; then
-            cp latexdiff "/c/Program Files/"
-            chmod +x "/c/Program Files/latexdiff"
+            cp -R latexdiff "/c/Program Files/"
+            echo "C:\Program Files\latexdiff" >> $GITHUB_PATH
+            latexdiff --version
           else
             sudo make install
           fi
-          ls "/c/Program Files/"
+
 
       - uses: r-lib/actions/setup-pandoc@v2
 
