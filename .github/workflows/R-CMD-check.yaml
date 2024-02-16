@@ -50,6 +50,7 @@ jobs:
           # cd ..
           rm -rf latexdiff
           "${RUNNER_TEMP}/latexdiff/latexdiff" --version
+          latexdiff --version
 
       - uses: r-lib/actions/setup-pandoc@v2
 
