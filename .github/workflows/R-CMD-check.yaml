@@ -49,6 +49,7 @@ jobs:
       - uses: quarto-dev/quarto-actions/setup@v2
 
       - name: Install latexdiff
+        shell: bash
         run: |
           curl -L -s https://mirrors.ctan.org/support/latexdiff.zip -o latexdiff.zip
           unzip latexdiff.zip
