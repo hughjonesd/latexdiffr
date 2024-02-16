@@ -35,9 +35,12 @@ jobs:
         run: |
           curl -L -s https://mirrors.ctan.org/support/latexdiff.zip -o latexdiff.zip
           unzip latexdiff.zip
-          cd latexdiff
-          sudo make install
-          cd ..
+          # cd latexdiff
+          mkdir -p "${GITHUB_WORKSPACE}/latexdiff"
+          cp -R latexdiff/* "${GITHUB_WORKSPACE}/latexdiff/"
+          echo "${GITHUB_WORKSPACE}/latexdiff" >> $GITHUB_PATH
+          # sudo make install
+          # cd ..
           rm -rf latexdiff
 
       - uses: r-lib/actions/setup-pandoc@v2
