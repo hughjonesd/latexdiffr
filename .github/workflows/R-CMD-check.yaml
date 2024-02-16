@@ -48,13 +48,10 @@ jobs:
 
       - name: Install latexdiff
         run: |
-          curl -s https://api.github.com/repos/ftilmann/latexdiff/releases/latest \
-            | jq -r '.tarball_url' \
-            | xargs curl -L -o latexdiff.tar.gz
-          tar -zxvf latexdiff.tar.gz
-          cd ftilmann-latexdiff-*
-          sudo make install
-          cd ..
+          curl -L -s https://mirrors.ctan.org/support/latexdiff.zip -o latexdiff.zip
+          unzip latexdiff.zip
+          cd latexdiff
+          make install
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
