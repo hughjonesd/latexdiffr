@@ -18,11 +18,11 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-latest,   r: 'release'}
+          # - {os: macos-latest,   r: 'release'}
+          # - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
+          # - {os: ubuntu-latest,   r: 'release'}
+          # - {os: ubuntu-latest,   r: 'oldrel-1'}
           - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -37,12 +37,13 @@ jobs:
           curl -L -s https://mirrors.ctan.org/support/latexdiff.zip -o latexdiff.zip
           unzip latexdiff.zip
           # cd latexdiff
-          mkdir -p "${GITHUB_WORKSPACE}/latexdiff"
-          cp -R latexdiff/* "${GITHUB_WORKSPACE}/latexdiff/"
-          echo "${GITHUB_WORKSPACE}/latexdiff" >> $GITHUB_PATH
+          mkdir -p "${RUNNER_TEMP}/latexdiff"
+          cp -R latexdiff/* "${RUNNER_TEMP}/latexdiff/"
+          echo "${RUNNER_TEMP}/latexdiff" >> $GITHUB_PATH
           # sudo make install
           # cd ..
           rm -rf latexdiff
+          latexdiff --version
 
       - uses: r-lib/actions/setup-pandoc@v2
 
