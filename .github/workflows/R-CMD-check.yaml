@@ -19,7 +19,7 @@ jobs:
       matrix:
         config:
           - {os: macos-latest,   r: 'release'}
-          #- {os: windows-latest, r: 'release'}
+          - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
           - {os: ubuntu-latest,   r: 'oldrel-1'}
@@ -53,7 +53,12 @@ jobs:
           curl -L -s https://mirrors.ctan.org/support/latexdiff.zip -o latexdiff.zip
           unzip latexdiff.zip
           cd latexdiff
-          sudo make install
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            make install
+          else
+            sudo make install
+          fi
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
