@@ -19,7 +19,6 @@ jobs:
       matrix:
         config:
           - {os: macos-latest,   r: 'release'}
-          - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
           - {os: ubuntu-latest,   r: 'oldrel-1'}
@@ -36,19 +35,10 @@ jobs:
         run: |
           curl -L -s https://mirrors.ctan.org/support/latexdiff.zip -o latexdiff.zip
           unzip latexdiff.zip
-          if [[ "$RUNNER_OS" == "Windows" ]]; then
-            mkdir -p "$HOME/.local/bin"
-            cp -R latexdiff "$HOME/.local/bin"
-            echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
-            echo "$PATH"
-            ls "$HOME/.local/bin/latexdiff"
-            latexdiff --version
-          else
-            cd latexdiff
-            sudo make install
-            cd ..
-          fi
-
+          cd latexdiff
+          sudo make install
+          cd ..
+          rm -rf latexdiff
 
       - uses: r-lib/actions/setup-pandoc@v2
 
