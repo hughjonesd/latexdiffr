@@ -55,8 +55,8 @@ jobs:
           unzip latexdiff.zip
           cd latexdiff
           if [[ "$RUNNER_OS" == "Windows" ]]; then
-            cp latexdiff "c/Program Files/"
-            chmod +x "c/Program Files/latexdiff"
+            cp latexdiff "/c/Program Files/"
+            chmod +x "/c/Program Files/latexdiff"
           else
             sudo make install
           fi
