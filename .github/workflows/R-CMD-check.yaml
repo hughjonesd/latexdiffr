@@ -60,7 +60,7 @@ jobs:
           else
             sudo make install
           fi
-          latexdiff --help
+          ls "/c/Program Files/"
 
       - uses: r-lib/actions/check-r-package@v2
         with:
