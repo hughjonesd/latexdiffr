@@ -55,7 +55,7 @@ jobs:
           unzip latexdiff.zip
           cd latexdiff
           if [[ "$RUNNER_OS" == "Windows" ]]; then
-            make install
+            echo "$(pwd)" >> $GITHUB_PATH
           else
             sudo make install
           fi
