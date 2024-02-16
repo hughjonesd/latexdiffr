@@ -44,6 +44,17 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install latexdiff
+        run: |
+          curl -s https://api.github.com/repos/ftilmann/latexdiff/releases/latest \
+            | jq -r '.tarball_url' \
+            | xargs curl -L -o latexdiff.tar.gz
+          tar -zxvf latexdiff.tar.gz
+          cd latexdiff
+          sudo make install
+          cd ..
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
