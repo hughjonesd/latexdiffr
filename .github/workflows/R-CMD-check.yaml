@@ -51,7 +51,7 @@ jobs:
           curl -L -s https://mirrors.ctan.org/support/latexdiff.zip -o latexdiff.zip
           unzip latexdiff.zip
           cd latexdiff
-          make install
+          sudo make install
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
