@@ -31,6 +31,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Algorithm::Diff
+        if: runner.os == 'Windows'
+        uses: perl-actions/install-with-cpm@stable
+        with:
+          install: "Algorithm::Diff"
+
       - name: Install latexdiff
         shell: bash
         run: |
@@ -39,7 +45,7 @@ jobs:
           # cd latexdiff
           mkdir -p "${RUNNER_TEMP}/latexdiff"
           cp -R latexdiff/* "${RUNNER_TEMP}/latexdiff/"
-          echo "${RUNNER_TEMP}/latexdiff" >> $GITHUB_PATH
+          echo "${RUNNER_TEMP}/latexdiff/" >> $GITHUB_PATH
           # sudo make install
           # cd ..
           rm -rf latexdiff
