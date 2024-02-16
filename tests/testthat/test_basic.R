@@ -59,7 +59,9 @@ test_that("Can compile when in different directory", {
     file.copy(files[idx], tmpdir[idx])
     paths[idx] <- file.path(tmpdir[idx], files[idx])
   }
-  latexdiff(paths[1], paths[2], open = FALSE)
+  expect_warning(
+    latexdiff(paths[1], paths[2], open = FALSE)
+  )
   check_and_remove("diff.pdf")
 })
 
@@ -95,7 +97,10 @@ test_that("Gives error when diff.pdf is old", {
 
   skip_if_not(file.exists("diff.pdf"), message = "diff.pdf didn't get created")
 
-  expect_error(latexdiff(file1, "wont-compile.tex"), "Failed to create")
+  # warnings are fine but not required
+  suppressWarnings(
+    expect_error(latexdiff(file1, "wont-compile.tex"), "Failed to create")
+  )
   if (file.exists("diff.pdf")) file.remove("diff.pdf")
 })
 
