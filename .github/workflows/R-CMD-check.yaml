@@ -37,12 +37,14 @@ jobs:
           curl -L -s https://mirrors.ctan.org/support/latexdiff.zip -o latexdiff.zip
           unzip latexdiff.zip
           if [[ "$RUNNER_OS" == "Windows" ]]; then
-            cp -R latexdiff "/c/Program Files/"
-            echo "C:\Program Files\latexdiff" >> $GITHUB_PATH
+            cp -R latexdiff "$HOME/.local/bin"
+            echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
             echo $GITHUB_PATH
             latexdiff --version
           else
+            cd latexdiff
             sudo make install
+            cd ..
           fi
 
 
