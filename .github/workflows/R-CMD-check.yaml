@@ -52,7 +52,7 @@ jobs:
           mkdir -p "$HOME/.local/bin"
           cp -R latexdiff "$HOME/.local/bin"
           rm "$HOME/.local/bin/latexdiff/latexdiff"
-          mv "$HOME/.local/bin/latexdiff/latexdiff-fast" "$HOME/.local/bin/latexdiff/latexdiff.exe"
+          mv "$HOME/.local/bin/latexdiff/latexdiff-fast" "$HOME/.local/bin/latexdiff/latexdiff.pl"
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
           rm -rf latexdiff
 
@@ -73,13 +73,14 @@ jobs:
       - name: Test latexdiff with system2
         shell: bash
         run: |
-          #Rscript -e "system2('latexdiff', '--version')"
+          Rscript -e "system2('latexdiff', '--version')"
+          Rscript -e "system2('latexdiff.pl', '--version')"
           #Rscript -e "system('latexdiff --version')"
           #Rscript -e "system('/c/Users/runneradmin/.local/bin/latexdiff/latexdiff --version')"
           #Rscript -e "system('/c/Users/runneradmin/.local/bin/latexdiff/latexdiff.exe --version')"
           #Rscript -e "shell('/c/Users/runneradmin/.local/bin/latexdiff/latexdiff --version')"
           Rscript -e "grep('latexdiff', Sys.getenv('PATH'), value = TRUE)"
-          Rscript -e "cat(shell('/c/Users/runneradmin/.local/bin/latexdiff/latexdiff.exe --version'))"
+          Rscript -e "cshell('/c/Users/runneradmin/.local/bin/latexdiff/latexdiff.pl --version')"
           latexdiff --version
           
       - uses: r-lib/actions/setup-r-dependencies@v2
