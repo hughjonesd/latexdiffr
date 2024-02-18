@@ -59,8 +59,8 @@ jobs:
       - name: Test latexdiff
         shell: bash
         run: |
-          latexdiff --version
-          which latexdiff
+          latexdiff.pl --version
+          which latexdiff.pl
           
       - uses: r-lib/actions/setup-pandoc@v2
 
