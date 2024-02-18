@@ -31,7 +31,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup perl
+        if: runner.os == 'Windows'
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: '5.30'
+          distribution: strawberry
+          
       - name: Install Algorithm::Diff (Windows)
+        if: runner.os == 'Windows'
         uses: perl-actions/install-with-cpanm@stable
         with:
           install: |
