@@ -55,13 +55,13 @@ jobs:
           mv "$HOME/.local/bin/latexdiff/latexdiff-fast" "$HOME/.local/bin/latexdiff/latexdiff.pl"
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
           rm -rf latexdiff
+          echo "LATEXDIFF_PATH='$HOME/.local/bin/latexdiff/latexdiff.pl'" >> $GITHUB_ENV
 
       - name: Test latexdiff
         shell: bash
         run: |
           latexdiff.pl --version
-          which latexdiff.pl
-          echo $HOME
+          echo $LATEXDIFF_PATH
           
       - uses: r-lib/actions/setup-pandoc@v2
 
