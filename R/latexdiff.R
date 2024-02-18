@@ -133,12 +133,11 @@ latexdiff <- function (
   diff_tex_path <- paste0(output, ".tex")
   latexdiff_stderr <- if (quiet) FALSE else ""
   ld_ret <- if (identical(.Platform$OS.type, "windows")) {
-          shell(
-            paste("latexdiff",
-              paste(ld_opts, collapse = " "), 
-              paste(shQuote(tex_paths), collapse = " "), 
-              ">", diff_tex_path)
-          )          
+          system2("latexdiff.pl",
+            c(ld_opts, shQuote(tex_paths)),
+            stdout = diff_tex_path,
+            stderr = latexdiff_stderr
+          )  
     } else {
           system2("latexdiff",
             c(ld_opts, shQuote(tex_paths)),
