@@ -131,15 +131,17 @@ latexdiff <- function (
   })
 
   diff_tex_path <- paste0(output, ".tex")
+  latexdiff_path <- Sys.getenv("LATEXDIFF_PATH", unset = "latexdiff")
   latexdiff_stderr <- if (quiet) FALSE else ""
+          
   ld_ret <- if (identical(.Platform$OS.type, "windows")) {
-          system2("latexdiff.pl",
-            c(ld_opts, shQuote(tex_paths)),
+          system2("perl",
+            c(latexdiff_path, ld_opts, shQuote(tex_paths)),
             stdout = diff_tex_path,
             stderr = latexdiff_stderr
           )  
     } else {
-          system2("C:\\Users\\runneradmin\\.local\\bin\\latexdiff\\run-latexdiff.bat",
+          system2(latexdiff_path,
             c(ld_opts, shQuote(tex_paths)),
             stdout = diff_tex_path,
             stderr = latexdiff_stderr
