@@ -33,7 +33,7 @@ jobs:
 
       - name: Install latexdiff
         shell: bash
-        if: matrix.os == 'macos-latest'
+        if: runner.os != 'Windows'
         run: |
           curl -L -s https://mirrors.ctan.org/support/latexdiff.zip -o latexdiff.zip
           unzip latexdiff.zip
@@ -45,7 +45,7 @@ jobs:
           
       - name: Install latexdiff on Windows
         shell: bash
-        if: matrix.os == 'windows-latest'
+        if: runner.os == 'Windows'
         run: |
           curl -L -s https://mirrors.ctan.org/support/latexdiff.zip -o latexdiff.zip
           unzip latexdiff.zip
