@@ -74,6 +74,7 @@ jobs:
         shell: bash
         run: |
           latexdiff --version
+          which latexdiff
           
       - uses: r-lib/actions/setup-pandoc@v2
 
