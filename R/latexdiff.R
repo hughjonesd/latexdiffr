@@ -34,6 +34,14 @@ NULL
 #' sudo apt install latexdiff
 #' ```
 #'
+#' For more details see [CTAN](https://www.ctan.org/pkg/latexdiff) or
+#' [github](https://github.com/ftilmann/latexdiff). You'll need a working
+#' `perl` installation.
+#'
+#' You can set the path to `latexdiff` in the environment variable
+#' `"LATEXDIFF_PATH"`, using [Sys.setenv()] or via the command line. If this is
+#' unset, it is assumed to be `"latexdiff"`.
+#'
 #' File types are determined by extension,which should be one of `.tex`, `.Rmd`,
 #' `.qmd` or `.rnw`. Rmd files are processed by [rmarkdown::render()]. Rnw files
 #' are processed by [knitr::knit()]. qmd files are processed by
@@ -131,12 +139,23 @@ latexdiff <- function (
   })
 
   diff_tex_path <- paste0(output, ".tex")
+  latexdiff_path <- Sys.getenv("LATEXDIFF_PATH", unset = "latexdiff")
   latexdiff_stderr <- if (quiet) FALSE else ""
-  ld_ret <- system2("latexdiff",
-          c(ld_opts, shQuote(tex_paths)),
-          stdout = diff_tex_path,
-          stderr = latexdiff_stderr
-        )
+
+  ld_ret <- if (identical(.Platform$OS.type, "windows")) {
+              system2("perl",
+                c(latexdiff_path, ld_opts, shQuote(tex_paths)),
+                stdout = diff_tex_path,
+                stderr = latexdiff_stderr
+              )
+            } else {
+              system2(latexdiff_path,
+                c(ld_opts, shQuote(tex_paths)),
+                stdout = diff_tex_path,
+                stderr = latexdiff_stderr
+              )
+            }
+
   if (ld_ret != 0L) stop("latexdiff command returned an error")
 
   if (compile) {

@@ -56,6 +56,14 @@ brew install latexdiff
 sudo apt install latexdiff
 }\if{html}{\out{</div>}}
 
+For more details see \href{https://www.ctan.org/pkg/latexdiff}{CTAN} or
+\href{https://github.com/ftilmann/latexdiff}{github}. You'll need a working
+\code{perl} installation.
+
+You can set the path to \code{latexdiff} in the environment variable
+\code{"LATEXDIFF_PATH"}, using \code{\link[=Sys.setenv]{Sys.setenv()}} or via the command line. If this is
+unset, it is assumed to be \code{"latexdiff"}.
+
 File types are determined by extension,which should be one of \code{.tex}, \code{.Rmd},
 \code{.qmd} or \code{.rnw}. Rmd files are processed by \code{\link[rmarkdown:render]{rmarkdown::render()}}. Rnw files
 are processed by \code{\link[knitr:knit]{knitr::knit()}}. qmd files are processed by
