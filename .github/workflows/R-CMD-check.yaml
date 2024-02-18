@@ -53,6 +53,7 @@ jobs:
           cp -R latexdiff "$HOME/.local/bin"
           rm "$HOME/.local/bin/latexdiff/latexdiff"
           mv "$HOME/.local/bin/latexdiff/latexdiff-fast" "$HOME/.local/bin/latexdiff/latexdiff.pl"
+          echo "latexdiff --version" >> "$HOME/.local/bin/latexdiff/run-latexdiff.bat"
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
           rm -rf latexdiff
 
@@ -61,6 +62,7 @@ jobs:
         run: |
           latexdiff.pl --version
           which latexdiff.pl
+          run-latexdiff.bat
           
       - uses: r-lib/actions/setup-pandoc@v2
 
