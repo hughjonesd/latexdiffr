@@ -51,6 +51,8 @@ jobs:
           unzip latexdiff.zip
           mkdir -p "$HOME/.local/bin"
           cp -R latexdiff "$HOME/.local/bin"
+          ls "$HOME/.local"
+          ls "$HOME/.local/bin"
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
           echo $PATH | grep latexdiff
           
