@@ -65,6 +65,8 @@ jobs:
         run: |
           mkdir -p "$HOME/.local/bin"
           cp -R latexdiff "$HOME/.local/bin"
+          rm "$HOME/.local/bin/latexdiff/latexdiff"
+          mv "$HOME/.local/bin/latexdiff/latexdiff-fast" "$HOME/.local/bin/latexdiff/latexdiff"
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
 
       - name: Test latexdiff
