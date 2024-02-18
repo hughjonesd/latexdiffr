@@ -52,7 +52,7 @@ jobs:
           mkdir -p "$HOME/.local/bin"
           cp -R latexdiff "$HOME/.local/bin"
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
-          echo $PATH | tail
+          echo $PATH | grep latexdiff
           
       - uses: r-lib/actions/setup-pandoc@v2
 
