@@ -54,10 +54,11 @@ jobs:
           ls "$HOME/.local"
           ls "$HOME/.local/bin"
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
+          
       - name: test path
         shell: bash
         run:
-          echo $PATH | grep latexdiff
+          latexdiff --version
           
       - uses: r-lib/actions/setup-pandoc@v2
 
