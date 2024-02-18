@@ -74,6 +74,10 @@ jobs:
       - name: Test latexdiff with system2
         shell: bash
         run: |
+          Rscript -e 'system2("which", "latexdiff")'
+          Rscript -e 'system2("which", "latexdiff.pl")'
+          Rscript -e 'Sys.which("latexdiff.pl")'
+          Rscript -e 'Sys.which("latexdiff")'
           Rscript -e 'system2("perl", c("/c/Users/runneradmin/.local/bin/latexdiff/latexdiff.pl", "--version"))'
                     
       - uses: r-lib/actions/setup-r-dependencies@v2
