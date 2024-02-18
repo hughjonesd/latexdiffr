@@ -53,7 +53,6 @@ jobs:
           cp -R latexdiff "$HOME/.local/bin"
           rm "$HOME/.local/bin/latexdiff/latexdiff"
           mv "$HOME/.local/bin/latexdiff/latexdiff-fast" "$HOME/.local/bin/latexdiff/latexdiff.pl"
-          echo "C:\\Users\\runneradmin\\.local\\bin\\latexdiff\\latexdiff.pl %*" >> "$HOME/.local/bin/latexdiff/run-latexdiff.bat"
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
           rm -rf latexdiff
 
@@ -62,7 +61,6 @@ jobs:
         run: |
           latexdiff.pl --version
           which latexdiff.pl
-          run-latexdiff.bat
           
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -75,7 +73,8 @@ jobs:
       - name: Test latexdiff with system2
         shell: bash
         run: |
-          Rscript -e 'system2("latexdiff", "--version")'
+          Rscript -e 'shell("echo $PATH")'
+          Rscript -e 'shell("grep latexdiff $PATH")'
                     
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
