@@ -30,20 +30,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-#      - name: Setup perl (Windows)
-#        if: runner.os == 'Windows'
-#        uses: shogo82148/actions-setup-perl@v1
-#        with:
-#          perl-version: '5.30'
-#          distribution: strawberry
-          
-#      - name: Install Algorithm::Diff (Windows)
-#        if: runner.os == 'Windows'
-#        uses: perl-actions/install-with-cpanm@stable
-#        with:
-#          install: |
-#            Algorithm::Diff
             
       - name: Download latexdiff
         shell: bash
@@ -66,7 +52,7 @@ jobs:
           mkdir -p "$HOME/.local/bin"
           cp -R latexdiff "$HOME/.local/bin"
           rm "$HOME/.local/bin/latexdiff/latexdiff"
-          mv "$HOME/.local/bin/latexdiff/latexdiff-fast" "$HOME/.local/bin/latexdiff/latexdiff"
+          mv "$HOME/.local/bin/latexdiff/latexdiff-fast" "$HOME/.local/bin/latexdiff/latexdiff.exe"
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
           rm -rf latexdiff
 
