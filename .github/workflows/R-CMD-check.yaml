@@ -31,34 +31,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install latexdiff
+      - name: Install Algorithm::Diff (Windows)
+        uses: perl-actions/install-with-cpanm@stable
+        with:
+          install: |
+            Algorithm::Diff
+            
+      - name: Download latexdiff
         shell: bash
-        if: runner.os != 'Windows'
         run: |
           curl -L -s https://mirrors.ctan.org/support/latexdiff.zip -o latexdiff.zip
           unzip latexdiff.zip
 
+      - name: Install latexdiff (Unix)
+        if: runner.os != 'Windows'
+        run: |
           cd latexdiff
           sudo make install
           cd ..
           rm -rf latexdiff
           
-      - name: Install latexdiff on Windows
+      - name: Install latexdiff (Windows)
         shell: bash
         if: runner.os == 'Windows'
         run: |
-          curl -L -s https://mirrors.ctan.org/support/latexdiff.zip -o latexdiff.zip
-          unzip latexdiff.zip
           mkdir -p "$HOME/.local/bin"
           cp -R latexdiff "$HOME/.local/bin"
-          ls "$HOME/.local"
-          ls "$HOME/.local/bin"
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
-          
-      - name: test path
-        shell: bash
-        run:
-          latexdiff --version
           
       - uses: r-lib/actions/setup-pandoc@v2
 
