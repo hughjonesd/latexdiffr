@@ -53,7 +53,7 @@ jobs:
           cp -R latexdiff "$HOME/.local/bin"
           rm "$HOME/.local/bin/latexdiff/latexdiff"
           mv "$HOME/.local/bin/latexdiff/latexdiff-fast" "$HOME/.local/bin/latexdiff/latexdiff.pl"
-          echo "C:\\Users\\runneradmin\\.local\\bin\\latexdiff\\latexdiff.pl --version" >> "$HOME/.local/bin/latexdiff/run-latexdiff.bat"
+          echo "C:\\Users\\runneradmin\\.local\\bin\\latexdiff\\latexdiff.pl %*" >> "$HOME/.local/bin/latexdiff/run-latexdiff.bat"
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
           rm -rf latexdiff
 
