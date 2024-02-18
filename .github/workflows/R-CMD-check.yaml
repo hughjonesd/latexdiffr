@@ -68,6 +68,7 @@ jobs:
           rm "$HOME/.local/bin/latexdiff/latexdiff"
           mv "$HOME/.local/bin/latexdiff/latexdiff-fast" "$HOME/.local/bin/latexdiff/latexdiff"
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
+          rm -rf latexdiff
 
       - name: Test latexdiff
         shell: bash
@@ -82,6 +83,11 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      - name: Test latexdiff with system2
+        shell: bash
+        run: |
+          Rscript -e "system2('latexdiff', '--version')"
+          
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
