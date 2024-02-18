@@ -75,7 +75,6 @@ jobs:
         run: |
           Rscript -e "system2('latexdiff', '--version')"
           Rscript -e "system2('latexdiff.pl', '--version')"
-          Rscript -e "shell('latexdiff.pl --version')"
           Rscript -e "shell('C:\\\\Users\\\\runneradmin\\\\.local\\\\bin\\\\latexdiff\\\\latexdiff.pl --version')"
           latexdiff --version
           
