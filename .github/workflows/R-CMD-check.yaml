@@ -87,6 +87,7 @@ jobs:
         shell: bash
         run: |
           Rscript -e "system2('latexdiff', '--version')"
+          latexdiff --version
           
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
