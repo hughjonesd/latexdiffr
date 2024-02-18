@@ -75,7 +75,7 @@ jobs:
       - name: Test latexdiff with system2
         shell: bash
         run: |
-          Rscript -e 'shell("run-latexdiff.bat --version")'
+          Rscript -e 'shell("C:\\\\Users\\\\runneradmin\\\\.local\\\\bin\\\\latexdiff\\\\run-latexdiff.bat --version")'
                     
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
