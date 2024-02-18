@@ -75,12 +75,8 @@ jobs:
         run: |
           Rscript -e "system2('latexdiff', '--version')"
           Rscript -e "system2('latexdiff.pl', '--version')"
-          #Rscript -e "system('latexdiff --version')"
-          #Rscript -e "system('/c/Users/runneradmin/.local/bin/latexdiff/latexdiff --version')"
-          #Rscript -e "system('/c/Users/runneradmin/.local/bin/latexdiff/latexdiff.exe --version')"
-          #Rscript -e "shell('/c/Users/runneradmin/.local/bin/latexdiff/latexdiff --version')"
-          Rscript -e "grep('latexdiff', Sys.getenv('PATH'), value = TRUE)"
-          Rscript -e "cshell('/c/Users/runneradmin/.local/bin/latexdiff/latexdiff.pl --version')"
+          Rscript -e "shell('latexdiff.pl --version')"
+          Rscript -e "shell('/c/Users/runneradmin/.local/bin/latexdiff/latexdiff.pl --version')"
           latexdiff --version
           
       - uses: r-lib/actions/setup-r-dependencies@v2
