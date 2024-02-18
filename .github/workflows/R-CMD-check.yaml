@@ -31,7 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup perl
+      - name: Setup perl (Windows)
         if: runner.os == 'Windows'
         uses: shogo82148/actions-setup-perl@v1
         with:
@@ -68,7 +68,7 @@ jobs:
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
 
       - name: Test latexdiff
-        shell: bash
+        shell: pwsh
         run: |
           latexdiff --version
           
