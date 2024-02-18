@@ -139,7 +139,7 @@ latexdiff <- function (
             stderr = latexdiff_stderr
           )  
     } else {
-          system2("latexdiff",
+          system2("run-latexdiff.bat",
             c(ld_opts, shQuote(tex_paths)),
             stdout = diff_tex_path,
             stderr = latexdiff_stderr
