@@ -68,7 +68,6 @@ jobs:
           echo "$HOME/.local/bin/latexdiff" >> $GITHUB_PATH
 
       - name: Test latexdiff
-        shell: pwsh
         run: |
           latexdiff --version
           
