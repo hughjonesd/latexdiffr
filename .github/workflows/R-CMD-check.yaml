@@ -78,7 +78,7 @@ jobs:
           Rscript -e 'system2("which", "latexdiff.pl")'
           Rscript -e 'Sys.which("latexdiff.pl")'
           Rscript -e 'Sys.which("latexdiff")'
-          Rscript -e 'system2("perl", c("/c/Users/runneradmin/.local/bin/latexdiff/latexdiff.pl", "--version"))'
+          Rscript -e 'system2("perl", c(Sys.getenv("LATEXDIFF_PATH"), "--version"))'
                     
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
