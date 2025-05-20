@@ -126,13 +126,24 @@ latexdiff <- function (
             }
             rmarkdown::render(paths[idx], output_format = output_format, quiet = quiet)
           } else if (extensions[idx] == "qmd") {
-            loadNamespace("quarto")
-            tex_file <- fs::path_ext_set(paths[idx], "tex")
-            tex_file <- fs::path_file(tex_file)
-            quarto::quarto_render(paths[idx], output_format = "latex",
-                                  output_file = tex_file, quiet = quiet)
-            tex_file
-          }
+  loadNamespace("quarto")
+
+  base <- fs::path_ext_remove(fs::path_file(paths[idx]))
+  tex_file <- paste0(base, ".tex")
+
+  quarto::quarto_render(
+    input = paths[idx],
+    output_format = output_format,
+    quiet = quiet,
+    metadata =  list( "keep-tex:true")
+  )
+
+  if (!fs::file_exists(tex_file)) {
+    stop("Expected .tex file '", tex_file, "' not found. Make sure your output format supports keep-tex.")
+  }
+
+  tex_file
+}
   }
   on.exit({
     if (clean) file.remove(setdiff(tex_paths, paths))
