@@ -1,0 +1,24 @@
+---
+title: "foo"
+output: pdf_document
+---
+
+This is a simple document with some changes.
+
+Here is some R code: `{r} 1+1`.
+
+Here is some more R code:
+
+```{r}
+#| echo: false
+1:5
+LETTERS[1:5]
+```
+
+
+Here is a plot:
+
+```{r}
+#| echo: false
+plot(1:5, 1:5)
+```

@@ -12,3 +12,13 @@ tests/testthat/foo.pdf
 tests/testthat/foo-qmd_files
 tests/testthat/foo.tex
 tests/testthat/git-changes*.tex
+tests/testthat/*.spl
+tests/testthat/diff.log
+tests/testthat/els-qmd_mod.pdf
+tests/testthat/els-qmd_mod_files/
+tests/testthat/bar-qmd_files/
+tests/testthat/els-qmd.pdf
+tests/testthat/els-qmd_files/
+tests/testthat/els-qmd_mod.tex
+tests/testthat/els-qmd_mod.tex
+tests/testthat/style-guide/*.pdf

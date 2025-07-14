@@ -18,7 +18,7 @@ in_git <- function () {
 
 test_that("All file types compile", {
   files1 <- c("foo-prerendered.tex", "foo-rnw.Rnw", "foo-rmd.Rmd", "foo-qmd.qmd")
-  files2 <- c("bar-prerendered.tex", "bar-rnw.Rnw", "bar-rmd.Rmd")
+  files2 <- c("bar-prerendered.tex", "bar-rnw.Rnw", "bar-rmd.Rmd", "bar-qmd.qmd")
 
   skip_if_not_installed("rmarkdown")
   skip_if_not_installed("knitr")
@@ -124,3 +124,13 @@ test_that("git_latexdiff works", {
   expect_error(git_latexdiff("git-changes.Rmd", "0ae84d"), regexp = NA)
   check_and_remove("diff.pdf")
 })
+
+
+test_that("different-pdf output formats for quarto work", {
+  skip_if_not_installed("quarto")
+  expect_error(latexdiff("els-qmd.qmd", "els-qmd_mod.qmd", open = FALSE), regexp = NA,
+               label = sprintf("File 1: %s, file 2: %s", "els-qmd.qmd", "els-qmd_mod.qmd"))
+  check_and_remove("diff.pdf")
+
+  }
+)
